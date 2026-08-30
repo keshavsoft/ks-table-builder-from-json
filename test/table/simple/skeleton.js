@@ -1,4 +1,4 @@
-import { renderSkeleton } from "../../../../webComponents/v3/core/controls/table/v4/index.js";
+import { renderSkeleton } from "../../../../webComponents/v3/core/controls/table/v5/index.js";
 
 const tableContainer = document.getElementById("tableContainer");
 const selectionBadge = document.getElementById("selectionBadge");
