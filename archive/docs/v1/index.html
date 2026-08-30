@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KS Table Builder - Web Components & Documentation Portal</title>
+    <meta name="description" content="Zero-dependency Custom HTML Web Components and Tailwind CSS tokens for high-performance forms and data tables.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        display: ['Outfit', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        h1, h2, h3, h4 { font-family: 'Outfit', sans-serif; }
+        code, pre { font-family: 'Fira Code', monospace; }
+        .glass-card {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(51, 65, 85, 0.6);
+        }
+    </style>
+</head>
+
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between antialiased selection:bg-indigo-500 selection:text-white">
+
+    <!-- Top Sticky Header -->
+    <header class="border-b border-slate-800 bg-slate-950/90 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-cyan-400 flex items-center justify-center font-extrabold text-white text-lg shadow-lg shadow-indigo-500/25">
+                    KS
+                </div>
+                <div>
+                    <div class="flex items-center space-x-2">
+                        <h1 class="text-lg font-extrabold text-white tracking-wide">KS Table Builder</h1>
+                        <span class="px-2 py-0.5 rounded-full text-[10px] font-mono bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">v1.2.1</span>
+                    </div>
+                    <p class="text-xs text-slate-400 hidden sm:block">Zero-Dependency Custom Web Components & 3-Layer Control Architecture</p>
+                </div>
+            </div>
+
+            <!-- Quick Links Header Navigation -->
+            <div class="flex items-center space-x-3 text-xs font-semibold">
+                <a href="#demo" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white transition-colors shadow-md shadow-indigo-500/20">
+                    Live Demo
+                </a>
+                <a href="../test/index.html" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-colors">
+                    Test Hub →
+                </a>
+                <a href="https://github.com/keshavsoft/ks-table-builder-from-json" target="_blank" rel="noopener noreferrer" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition-colors border border-slate-700">
+                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden pt-12 pb-16 border-b border-slate-900 bg-gradient-to-b from-slate-950 via-slate-900/50 to-slate-950">
+        <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-indigo-500/15 rounded-full blur-[120px] pointer-events-none"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-cyan-500/10 border border-indigo-500/20 text-indigo-300 text-xs font-semibold mb-6">
+                <span>🚀 Zero Dependencies • 3-Layer Orchestration • Tailwind CSS Design Tokens</span>
+            </div>
+
+            <h2 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight">
+                JSON-Driven Data Tables & <br class="hidden sm:block" />
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-cyan-400">Vertical Form Web Components</span>
+            </h2>
+
+            <p class="text-base sm:text-lg text-slate-400 max-w-3xl mx-auto mt-5 leading-relaxed">
+                Build high-throughput, reactive DOM tables and dynamic forms directly from JSON objects. Includes real-time search filtering, auto data mapping, Server-Side Rendering (SSR) HTML generation, and custom element wrappers.
+            </p>
+
+            <!-- Key Feature Badges -->
+            <div class="flex flex-wrap justify-center gap-3 mt-8 text-xs font-semibold">
+                <span class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300">⚡ 0 Runtime Dependencies</span>
+                <span class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300">🔍 In-Place Search Toolbar</span>
+                <span class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300">🎨 5 Built-in Themes</span>
+                <span class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300">💻 2-Phase Async Mounting</span>
+                <span class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300">🌐 SSR HTML Compilation</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Section with Navigation Tabs & Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-grow w-full">
+        
+        <!-- Documentation Cards Navigation Grid -->
+        <div class="mb-12">
+            <h3 class="text-xl font-bold text-white mb-6 flex items-center space-x-2">
+                <span>📖</span>
+                <span>Documentation Guides & Manuals</span>
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <a href="TABLE.md" class="glass-card p-5 rounded-2xl hover:border-indigo-500/50 transition-all group">
+                    <div class="text-2xl mb-3 text-indigo-400">📊</div>
+                    <h4 class="font-bold text-white group-hover:text-indigo-400 transition-colors">Table Specification</h4>
+                    <p class="text-xs text-slate-400 mt-1 leading-relaxed">Table v11, single-call vs 2-phase async, in-place search, auto mapper, themes.</p>
+                    <span class="text-[11px] font-bold text-indigo-400 mt-4 inline-block">Read TABLE.md →</span>
+                </a>
+
+                <a href="FORM.md" class="glass-card p-5 rounded-2xl hover:border-purple-500/50 transition-all group">
+                    <div class="text-2xl mb-3 text-purple-400">📋</div>
+                    <h4 class="font-bold text-white group-hover:text-purple-400 transition-colors">Form Specification</h4>
+                    <p class="text-xs text-slate-400 mt-1 leading-relaxed">Form v7, 3-layer architecture, SSR HTML strings, hydration & extraction.</p>
+                    <span class="text-[11px] font-bold text-purple-400 mt-4 inline-block">Read FORM.md →</span>
+                </a>
+
+                <a href="ARCHITECTURE.md" class="glass-card p-5 rounded-2xl hover:border-cyan-500/50 transition-all group">
+                    <div class="text-2xl mb-3 text-cyan-400">🏛️</div>
+                    <h4 class="font-bold text-white group-hover:text-cyan-400 transition-colors">Architecture & Internals</h4>
+                    <p class="text-xs text-slate-400 mt-1 leading-relaxed">3-Layer orchestration model, web components, and parameter naming rules.</p>
+                    <span class="text-[11px] font-bold text-cyan-400 mt-4 inline-block">Read ARCHITECTURE.md →</span>
+                </a>
+
+                <a href="API.md" class="glass-card p-5 rounded-2xl hover:border-emerald-500/50 transition-all group">
+                    <div class="text-2xl mb-3 text-emerald-400">📖</div>
+                    <h4 class="font-bold text-white group-hover:text-emerald-400 transition-colors">API Reference Manual</h4>
+                    <p class="text-xs text-slate-400 mt-1 leading-relaxed">Complete API reference for Table, Form, Core Helpers, DOM & HTML engines.</p>
+                    <span class="text-[11px] font-bold text-emerald-400 mt-4 inline-block">Read API.md →</span>
+                </a>
+
+                <a href="JSON_DRIVEN_RENDERING.md" class="glass-card p-5 rounded-2xl hover:border-amber-500/50 transition-all group">
+                    <div class="text-2xl mb-3 text-amber-400">🧱</div>
+                    <h4 class="font-bold text-white group-hover:text-amber-400 transition-colors">JSON Spec Rendering</h4>
+                    <p class="text-xs text-slate-400 mt-1 leading-relaxed">JSON spec trees, God Specs, schema definitions, and DOM builder.</p>
+                    <span class="text-[11px] font-bold text-amber-400 mt-4 inline-block">Read JSON_DRIVEN_RENDERING.md →</span>
+                </a>
+
+                <a href="HTML_GENERATION.md" class="glass-card p-5 rounded-2xl hover:border-rose-500/50 transition-all group">
+                    <div class="text-2xl mb-3 text-rose-400">🌐</div>
+                    <h4 class="font-bold text-white group-hover:text-rose-400 transition-colors">HTML Generation (SSR)</h4>
+                    <p class="text-xs text-slate-400 mt-1 leading-relaxed">buildSpecHtml compiler, HTML escaping, and self-closing void elements.</p>
+                    <span class="text-[11px] font-bold text-rose-400 mt-4 inline-block">Read HTML_GENERATION.md →</span>
+                </a>
+
+                <a href="TAILWIND_CLASSES.md" class="glass-card p-5 rounded-2xl hover:border-sky-500/50 transition-all group">
+                    <div class="text-2xl mb-3 text-sky-400">🎨</div>
+                    <h4 class="font-bold text-white group-hover:text-sky-400 transition-colors">Tailwind CSS Tokens</h4>
+                    <p class="text-xs text-slate-400 mt-1 leading-relaxed">themes.json structure, applyTheme spec merging, and class token injection.</p>
+                    <span class="text-[11px] font-bold text-sky-400 mt-4 inline-block">Read TAILWIND_CLASSES.md →</span>
+                </a>
+
+                <a href="../README.md" class="glass-card p-5 rounded-2xl hover:border-slate-500/50 transition-all group">
+                    <div class="text-2xl mb-3 text-slate-400">🏠</div>
+                    <h4 class="font-bold text-white group-hover:text-slate-300 transition-colors">Main README</h4>
+                    <p class="text-xs text-slate-400 mt-1 leading-relaxed">Overview, quickstarts, installation instructions, and CLI reference.</p>
+                    <span class="text-[11px] font-bold text-slate-300 mt-4 inline-block">Read README.md →</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Live Component Playground / Interactive Demo Section -->
+        <section id="demo" class="scroll-mt-24 mb-16">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <h3 class="text-2xl font-bold text-white flex items-center space-x-2">
+                        <span>🧪</span>
+                        <span>Interactive Controls & Themes Playground</span>
+                    </h3>
+                    <p class="text-xs text-slate-400 mt-1">Render real-time Data Tables and Vertical Forms dynamically below.</p>
+                </div>
+                <div class="flex space-x-2">
+                    <button id="btnShowTable" class="px-4 py-2 rounded-xl bg-indigo-600 text-white font-semibold text-xs shadow-lg shadow-indigo-600/30 transition-all">Table Control</button>
+                    <button id="btnShowForm" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs transition-all">Form Control</button>
+                </div>
+            </div>
+
+            <!-- Demo Container Box -->
+            <div class="glass-card p-6 sm:p-8 rounded-3xl min-h-[400px]">
+                <!-- Table Controls Header Bar -->
+                <div id="tableThemeControls" class="flex flex-wrap items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-800">
+                    <div class="flex items-center space-x-3">
+                        <span class="text-xs font-semibold text-slate-400">Select Theme:</span>
+                        <select id="themeSelect" class="bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            <option value="light">light</option>
+                            <option value="medium" selected>medium</option>
+                            <option value="dark">dark</option>
+                            <option value="extra-dark">extra-dark</option>
+                            <option value="extra-light">extra-light</option>
+                        </select>
+                    </div>
+                    <div id="selectionOutput" class="text-xs text-indigo-400 font-semibold bg-indigo-500/10 px-3 py-1.5 rounded-lg border border-indigo-500/20 hidden">
+                        <!-- Selected Row Info -->
+                    </div>
+                </div>
+
+                <!-- Control Mount Target -->
+                <div id="demoMountPoint" class="w-full overflow-x-auto">
+                    <!-- Dynamic Component Rendered Here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 3-Layer Architecture Visual Diagram -->
+        <section class="glass-card p-8 rounded-3xl mb-16">
+            <h3 class="text-xl font-bold text-white mb-6 flex items-center space-x-2">
+                <span>🏛️</span>
+                <span>3-Layer Component Control Architecture</span>
+            </h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
+                <div class="p-5 rounded-2xl bg-slate-900/80 border border-indigo-500/30">
+                    <div class="text-xs font-mono text-indigo-400 font-bold mb-2">LAYER 1</div>
+                    <h4 class="font-bold text-white text-base">Skeleton Shell Creation</h4>
+                    <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                        Constructs the outer layout container nodes (<code class="text-slate-300">&lt;table&gt;</code>, <code class="text-slate-300">&lt;form&gt;</code>, <code class="text-slate-300">&lt;thead&gt;</code>, empty <code class="text-slate-300">&lt;tbody&gt;</code> slot). Does NOT construct data rows or fields.
+                    </p>
+                </div>
+
+                <div class="p-5 rounded-2xl bg-slate-900/80 border border-purple-500/30">
+                    <div class="text-xs font-mono text-purple-400 font-bold mb-2">LAYER 2</div>
+                    <h4 class="font-bold text-white text-base">Event Listener Hooks</h4>
+                    <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                        Registers event handlers on skeleton DOM nodes. Hooks search input keyup listeners for in-place table filtering and form submit prevention.
+                    </p>
+                </div>
+
+                <div class="p-5 rounded-2xl bg-slate-900/80 border border-cyan-500/30">
+                    <div class="text-xs font-mono text-cyan-400 font-bold mb-2">LAYER 3</div>
+                    <h4 class="font-bold text-white text-base">User UI & Data Hydration</h4>
+                    <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                        Transforms raw data records (<code class="text-slate-300">prepareTableData</code>), constructs row DOM nodes, and mounts/refreshes them into container slots in-place.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-900 bg-slate-950 py-8 text-center text-xs text-slate-500">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p>© 2026 KeshavSoft. ks-table-builder-from-json v1.2.1 • ISC License</p>
+            <div class="flex items-center space-x-4">
+                <a href="../test/index.html" class="hover:text-slate-300 transition-colors">Test Suite Hub</a>
+                <span>•</span>
+                <a href="API.md" class="hover:text-slate-300 transition-colors">API Specs</a>
+                <span>•</span>
+                <a href="https://github.com/keshavsoft/ks-table-builder-from-json" target="_blank" class="hover:text-slate-300 transition-colors">GitHub Repository</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Script module -->
+    <script type="module">
+        import { renderTable, renderForm } from "../index.js";
+
+        const mountPoint = document.getElementById("demoMountPoint");
+        const themeSelect = document.getElementById("themeSelect");
+        const btnShowTable = document.getElementById("btnShowTable");
+        const btnShowForm = document.getElementById("btnShowForm");
+        const tableControls = document.getElementById("tableThemeControls");
+        const selectionOutput = document.getElementById("selectionOutput");
+
+        const sampleRows = [
+            { StockItemName: "0.09/30mm FABRIC", StockParentName: "FISH KNITTED FABRIC", Uom: "kgs" },
+            { StockItemName: "0.11-25 COTTON", StockParentName: "COTTON KNITTED", Uom: "kgs" },
+            { StockItemName: "0.14/30mm NYLON", StockParentName: "SYNTHETIC FABRIC", Uom: "meters" },
+            { StockItemName: "0.18 POLYESTER", StockParentName: "SYNTHETIC FABRIC", Uom: "meters" },
+            { StockItemName: "0.22 SILK FABRIC", StockParentName: "NATURAL SILK", Uom: "meters" }
+        ];
+
+        const sampleFields = [
+            { name: "username", label: "Account Username", type: "text", placeholder: "Enter username" },
+            { name: "email", label: "Email Address", type: "email", placeholder: "user@example.com" },
+            { name: "category", label: "Product Category", type: "text", placeholder: "Fabric / Textile" }
+        ];
+
+        let currentControl = "table";
+
+        function renderCurrentControl() {
+            mountPoint.replaceChildren();
+            selectionOutput.classList.add("hidden");
+
+            if (currentControl === "table") {
+                tableControls.classList.remove("hidden");
+                btnShowTable.className = "px-4 py-2 rounded-xl bg-indigo-600 text-white font-semibold text-xs shadow-lg shadow-indigo-600/30 transition-all";
+                btnShowForm.className = "px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs transition-all";
+
+                const theme = themeSelect.value;
+                const tableElem = renderTable({
+                    inTheme: theme,
+                    inRows: sampleRows,
+                    inOnRowClick: ({ inRowElement }) => {
+                        const name = inRowElement.children[1]?.textContent;
+                        const parent = inRowElement.children[2]?.textContent;
+                        selectionOutput.textContent = `Selected: ${name} (${parent})`;
+                        selectionOutput.classList.remove("hidden");
+                    }
+                });
+                mountPoint.appendChild(tableElem);
+            } else {
+                tableControls.classList.add("hidden");
+                btnShowForm.className = "px-4 py-2 rounded-xl bg-purple-600 text-white font-semibold text-xs shadow-lg shadow-purple-600/30 transition-all";
+                btnShowTable.className = "px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs transition-all";
+
+                const formElem = renderForm({
+                    inFields: sampleFields,
+                    inData: { username: "Keshav", email: "support@keshavsoft.com", category: "Fabric" },
+                    inOnSubmit: ({ inFormData, inEvent }) => {
+                        inEvent.preventDefault();
+                        alert(`Submitted Form Payload:\n${JSON.stringify(inFormData, null, 2)}`);
+                    }
+                });
+                mountPoint.appendChild(formElem);
+            }
+        }
+
+        themeSelect.addEventListener("change", renderCurrentControl);
+        btnShowTable.addEventListener("click", () => { currentControl = "table"; renderCurrentControl(); });
+        btnShowForm.addEventListener("click", () => { currentControl = "form"; renderCurrentControl(); });
+
+        // Initial render
+        renderCurrentControl();
+    </script>
+</body>
+
+</html>
