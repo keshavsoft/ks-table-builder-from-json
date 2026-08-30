@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table v10 - Flavor 1: Single-Call Creation | KS Table Builder</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        display: ['Outfit', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        h1, h2, h3 { font-family: 'Outfit', sans-serif; }
+    </style>
+</head>
+
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col justify-between antialiased">
+    <!-- Top Header Navigation -->
+    <header class="border-b border-slate-200 bg-white/80 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center font-bold text-white shadow-md shadow-blue-500/20">
+                    KS
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold text-slate-900 tracking-wide">KS Table Builder</h1>
+                    <p class="text-xs text-slate-500">Zero-Dependency Custom Web Components</p>
+                </div>
+            </div>
+            <a href="./index.html" class="inline-flex items-center space-x-2 text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors border border-slate-200">
+                <span>← Back to Table Index</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content Body -->
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full flex-grow">
+        <!-- Page Title & Feature Badges -->
+        <div class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 pb-6">
+            <div>
+                <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-medium mb-3">
+                    <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                    <span>Pattern: Flavor 1 Direct Call</span>
+                </div>
+                <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Table v10 — Single-Call Creation</h2>
+                <p class="text-sm text-slate-600 mt-1 max-w-xl">
+                    Constructs and hydrates complete table DOM nodes in one synchronized call via `renderTable`.
+                </p>
+            </div>
+
+            <!-- Dynamic Selection Toast/Badge -->
+            <div id="selectionBadge" class="hidden px-4 py-2.5 rounded-xl bg-blue-50 border border-blue-200 text-blue-800 text-xs font-semibold shadow-sm">
+                Click a row to select an item...
+            </div>
+        </div>
+
+        <!-- Table Mounting Container Shell -->
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-xl">
+            <div id="tableContainer" class="w-full">
+                <!-- Rendered dynamically by singleCall.js -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-200 bg-white py-6 text-center text-xs text-slate-500">
+        <p>© 2026 KeshavSoft. ks-table-builder-from-json v1.2.1 • High Performance Form & Table Controls</p>
+    </footer>
+
+    <script type="module" src="./singleCall.js"></script>
+</body>
+
+</html>

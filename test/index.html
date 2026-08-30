@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KS Table Builder - Suite Hub Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        display: ['Outfit', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        h1, h2, h3 { font-family: 'Outfit', sans-serif; }
+    </style>
+</head>
+
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between antialiased selection:bg-indigo-500 selection:text-white">
+    <!-- Top Header -->
+    <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-cyan-400 flex items-center justify-center font-extrabold text-white text-lg shadow-lg shadow-indigo-500/25">
+                    KS
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold text-white tracking-wide">KS Table Builder</h1>
+                    <p class="text-xs text-slate-400">Zero-Dependency Custom Web Components v1.2.1</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3">
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 mr-2 animate-pulse"></span>
+                    Dev Server Active
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Hero Section & Suite Cards -->
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full flex-grow flex flex-col justify-center">
+        <div class="text-center max-w-3xl mx-auto mb-14">
+            <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 text-indigo-300 text-xs font-semibold mb-6 shadow-sm">
+                <span>🚀 3-Layer Component Control Architecture</span>
+            </div>
+            <h2 class="text-4xl font-extrabold text-white tracking-tight sm:text-5xl lg:text-6xl">
+                High-Performance <br class="hidden sm:block" />
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-cyan-400">Forms & Data Tables</span>
+            </h2>
+            <p class="text-base text-slate-400 mt-4 leading-relaxed max-w-2xl mx-auto">
+                Explore execution patterns for real-time search filtering, data mapping, multi-flavor rendering, event hooks, and Web Components.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto w-full">
+            <!-- Table Suite Card -->
+            <a href="./table/index.html" class="group relative bg-gradient-to-b from-slate-900 to-slate-900/80 hover:from-slate-800 hover:to-slate-900 p-8 rounded-3xl border border-slate-800 hover:border-indigo-500/50 transition-all duration-300 shadow-2xl flex flex-col justify-between overflow-hidden">
+                <div class="absolute -right-12 -top-12 w-40 h-40 bg-indigo-500/10 rounded-full blur-3xl group-hover:bg-indigo-500/20 transition-all"></div>
+                <div>
+                    <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-2xl text-indigo-400 mb-6 group-hover:scale-110 transition-transform">
+                        📊
+                    </div>
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="text-2xl font-bold text-white group-hover:text-indigo-400 transition-colors">Table Suite</h3>
+                        <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700">v11 Included</span>
+                    </div>
+                    <p class="text-sm text-slate-400 leading-relaxed mt-2">
+                        Includes Table v11 with real-time in-place search toolbar, auto serial number mapper, theme switcher, and 2-phase async skeleton mounting.
+                    </p>
+                </div>
+                <div class="mt-8 pt-6 border-t border-slate-800/80 flex items-center justify-between text-xs font-bold text-indigo-400">
+                    <span>Explore Table Patterns (3 Demos)</span>
+                    <span class="text-base group-hover:translate-x-1 transition-transform">→</span>
+                </div>
+            </a>
+
+            <!-- Form Suite Card -->
+            <a href="./form/index.html" class="group relative bg-gradient-to-b from-slate-900 to-slate-900/80 hover:from-slate-800 hover:to-slate-900 p-8 rounded-3xl border border-slate-800 hover:border-purple-500/50 transition-all duration-300 shadow-2xl flex flex-col justify-between overflow-hidden">
+                <div class="absolute -right-12 -top-12 w-40 h-40 bg-purple-500/10 rounded-full blur-3xl group-hover:bg-purple-500/20 transition-all"></div>
+                <div>
+                    <div class="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-2xl text-purple-400 mb-6 group-hover:scale-110 transition-transform">
+                        📋
+                    </div>
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="text-2xl font-bold text-white group-hover:text-purple-400 transition-colors">Form Suite</h3>
+                        <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700">v1 Included</span>
+                    </div>
+                    <p class="text-sm text-slate-400 leading-relaxed mt-2">
+                        Includes Single-Call Form creation, 2-Phase async skeleton mounting, raw HTML string generation (SSR), and live JSON submit hooks.
+                    </p>
+                </div>
+                <div class="mt-8 pt-6 border-t border-slate-800/80 flex items-center justify-between text-xs font-bold text-purple-400">
+                    <span>Explore Form Patterns (3 Demos)</span>
+                    <span class="text-base group-hover:translate-x-1 transition-transform">→</span>
+                </div>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-900 bg-slate-950 py-8 text-center text-xs text-slate-500">
+        <p>© 2026 KeshavSoft. ks-table-builder-from-json v1.2.1 • High Performance Form & Table Controls</p>
+    </footer>
+</body>
+
+</html>
