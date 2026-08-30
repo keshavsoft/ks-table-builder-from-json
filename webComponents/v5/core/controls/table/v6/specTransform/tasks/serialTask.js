@@ -2,6 +2,7 @@
  * Task Transformer: Toggles the serial number (#) column elements in tr rows
  */
 export const createSerialTask = ({ inShowSerial = true }) => {
+    console.log("localShowSerial-------- : ", inShowSerial);
     return ({ inSpec }) => {
         if (inShowSerial) return inSpec;
 

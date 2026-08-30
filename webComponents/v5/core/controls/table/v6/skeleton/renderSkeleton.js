@@ -23,7 +23,7 @@ export const renderSkeleton = ({
     const localShowHeader = inShowHeader !== false;
     const localShowBody = inShowBody !== false;
     const localShowFooter = inShowFooter !== false;
-
+    
     const resolvedThemeSpec = resolveThemeSpec({ inTheme, inThemeName, inThemeSpec });
 
     // Build pipeline array of task functions or use custom inPipeline
