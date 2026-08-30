@@ -1,7 +1,7 @@
 {
   "tagName": "div",
   "attributes": {
-    "class": "table-wrapper space-y-3 kkkkkkkkkkk"
+    "class": "table-wrapper space-y-3"
   },
   "children": [
     {
@@ -25,10 +25,24 @@
           ]
         },
         {
-          "tagName": "input",
+          "tagName": "div",
           "attributes": {
-            "class": "border border-gray-300 rounded px-3 py-1.5 text-sm w-64 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          }
+            "class": "relative flex items-center"
+          },
+          "children": [
+            {
+              "tagName": "span",
+              "attributes": {
+                "class": "absolute left-2.5 text-gray-400 pointer-events-none text-sm"
+              }
+            },
+            {
+              "tagName": "input",
+              "attributes": {
+                "class": "border border-gray-300 rounded pl-8 pr-3 py-1.5 text-sm w-64 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              }
+            }
+          ]
         }
       ]
     },
