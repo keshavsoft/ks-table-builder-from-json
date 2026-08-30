@@ -1,4 +1,4 @@
-import { renderTable } from "../../../../webComponents/v3/core/controls/table/v2/index.js";
+import { renderTable } from "../../../../webComponents/v3/core/controls/table/v3/index.js";
 
 const tableContainer = document.getElementById("tableContainer");
 const selectionBadge = document.getElementById("selectionBadge");
@@ -30,7 +30,9 @@ if (tableContainer) {
     const tableElement = renderTable({
         inTheme: "light",
         inRows: stockRows,
-        inOnRowClick: handleRowClick
+        inOnRowClick: handleRowClick,
+        inShowFooter: false,
+        inShowSerial: false
     });
 
     if (tableElement) {

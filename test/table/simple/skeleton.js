@@ -1,4 +1,4 @@
-import { renderSkeleton } from "../../../../webComponents/v3/core/controls/table/v2/index.js";
+import { renderSkeleton } from "../../../../webComponents/v3/core/controls/table/v3/index.js";
 
 const tableContainer = document.getElementById("tableContainer");
 const selectionBadge = document.getElementById("selectionBadge");
@@ -30,7 +30,8 @@ if (tableContainer) {
     const tableElement = renderSkeleton({
         inTheme: "light",
         inRows: stockRows,
-        inOnRowClick: handleRowClick
+        inOnRowClick: handleRowClick,
+        inShowFooter: false
     });
 
     if (tableElement) {
