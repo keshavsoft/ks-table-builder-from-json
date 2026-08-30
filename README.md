@@ -1,23 +1,40 @@
 # ks-table-builder-from-json
 
-> Zero-dependency, high-performance Web Components and 3-Layer JavaScript architecture for dynamic Data Tables and Vertical Forms built with Tailwind CSS design tokens.
+> Zero-dependency, high-performance Custom HTML Web Components and 3-Layer JavaScript architecture for dynamic Data Tables and Vertical Forms built with Tailwind CSS design tokens.
 
 [![npm version](https://img.shields.io/npm/v/ks-table-builder-from-json.svg)](https://www.npmjs.com/package/ks-table-builder-from-json)
 [![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
 [![Zero Dependencies](https://img.shields.io/badge/dependencies-0-success.svg)](https://github.com/keshavsoft/ks-table-builder-from-json)
+[![Node Tests](https://img.shields.io/badge/tests-passing-brightgreen.svg)](test/unit.test.js)
+
+---
+
+## 📖 Documentation Suite
+
+Explore the comprehensive guides and specs for `ks-table-builder-from-json`:
+
+| Document Guide | Description |
+| :--- | :--- |
+| 📊 [**Table Component Specification**](docs/TABLE.md) | Full guide to Table v11, single-call vs 2-phase async mounting, in-place search, themes, and data mapping. |
+| 📋 [**Form Component Specification**](docs/FORM.md) | Guide to Form v7, 3-layer architecture, single-call, 2-phase async, SSR HTML string generation, data hydration, and extraction. |
+| 🏛️ [**System Architecture & Internals**](docs/ARCHITECTURE.md) | Internal architecture, 3-Layer Orchestration Pattern, Web Components layer, and parameter naming rules. |
+| 📖 [**API Reference Manual**](docs/API.md) | Full API reference for Table, Form, Core Helpers, DOM Creation Engine, HTML Generator, and Web Components. |
+| 🧱 [**JSON-Driven Rendering & Specs**](docs/JSON_DRIVEN_RENDERING.md) | Breakdown of JSON spec trees, God Specs (`tableGodSpec.json`, `formGodSpec.json`), and `buildSpecElement`. |
+| 🌐 [**HTML String Generation & SSR**](docs/HTML_GENERATION.md) | Details on `buildSpecHtml` for Server-Side Rendering (SSR), HTML escaping, and void elements. |
+| 🎨 [**Tailwind CSS Tokens & JSON Themes**](docs/TAILWIND_CLASSES.md) | Guide to `themes.json`, `applyTheme` recursive spec merging, and class token injection. |
 
 ---
 
 ## 🌟 Key Features
 
-- **🚀 Zero Runtime Dependencies**: Pure vanilla JavaScript & Custom HTML Web Components with zero third-party overhead.
-- **🏗️ 3-Layer Orchestration Architecture**: Strict separation between Layout Shell (Skeleton), Event Binding Hooks, and User UI Hydration.
-- **🔍 Built-in Real-Time In-Place Search**: Real-time filtering toolbar that refreshes the `tbody` slot container dynamically without re-mounting the DOM shell.
+- **🚀 Zero Runtime Dependencies**: Pure vanilla JavaScript & Custom HTML Web Components with zero third-party framework overhead.
+- **🏗️ 3-Layer Orchestration Architecture**: Strict separation between Layout Shell (Skeleton), Event Listener Hooks, and User UI Hydration.
+- **🔍 Built-in Real-Time In-Place Search**: Real-time filtering toolbar that refreshes the `tbody` slot container dynamically without re-mounting the layout shell.
 - **🔢 Automated Data Mapping**: Computes serial numbers (`serialNo`), formats row values, and standardizes record schemas transparently.
 - **🎨 5 Built-in Themes**: `dark`, `extra-dark`, `medium`, `light`, and `extra-light` theme spec overrides out of the box.
 - **💻 Dual Execution Modes**: Support for single-call synchronous rendering or 2-phase asynchronous skeleton mounting (ideal for REST API data fetching).
 - **🌐 Custom Web Components**: Custom elements (`<ks-table-base>`, `<ks-cell-base>`, `<ks-wrapper-base>`) with inline attribute parser (`ks-*`).
-- **🛠️ Built-in CLI**: Scaffolding and documentation CLI helper (`npx ks-table-builder-from-json`).
+- **🛠️ Built-in CLI**: Scaffolding, defaults inspection, and documentation CLI helper (`npx ks-table-builder-from-json`).
 
 ---
 
@@ -27,7 +44,7 @@ The library operates on a strict **3-Layer Architectural Pattern** designed for 
 
 ```mermaid
 flowchart TD
-    A[Input Data & Config] --> B[Layer 1: Skeleton Creation]
+    A[Input Data & Config] --> B[Layer 1: Skeleton Shell Creation]
     B -->|DOM Shell Node / HTML String| C[Layer 2: Event Binding Hooks]
     C -->|Hooked Search & Click/Submit| D[Layer 3: User UI & Data Hydration]
     D --> E[Rendered Table / Form DOM Element]
@@ -50,6 +67,8 @@ flowchart TD
     end
 ```
 
+For full details, read the [System Architecture Guide](docs/ARCHITECTURE.md).
+
 ---
 
 ## ⚡ Quickstart
@@ -60,7 +79,7 @@ flowchart TD
 npm install ks-table-builder-from-json
 ```
 
-Or run via CLI:
+Or initialize via CLI:
 
 ```bash
 npx ks-table-builder-from-json init
@@ -68,11 +87,9 @@ npx ks-table-builder-from-json init
 
 ---
 
-## 📊 Table Controls
+## 📊 Table Controls Summary
 
-### Single-Call Rendering (`renderTable`)
-
-Create a complete table with built-in search toolbar, data mapper, and row click handler in a single call:
+### Single-Call Table Rendering (`renderTable`)
 
 ```javascript
 import { renderTable } from "ks-table-builder-from-json";
@@ -99,41 +116,11 @@ const tableElement = renderTable({
 tableContainer.appendChild(tableElement);
 ```
 
-### 2-Phase Async Mount Pattern
-
-Mount the table shell immediately, then hydrate data when your API call resolves:
-
-```javascript
-import { renderSkeleton, renderUserUI, bindSkeletonEvents } from "ks-table-builder-from-json";
-
-const tableContainer = document.getElementById("tableContainer");
-
-// Phase 1: Mount skeleton DOM immediately
-const skeletonElement = renderSkeleton({ inTheme: "medium" });
-
-bindSkeletonEvents({
-    inTableElement: skeletonElement,
-    inOnRowClick: ({ inRowElement }) => {
-        console.log("Row clicked:", inRowElement);
-    }
-});
-
-tableContainer.appendChild(skeletonElement);
-
-// Phase 2: Asynchronously populate data when API returns
-fetch("/api/stock-items")
-    .then(res => res.json())
-    .then(data => {
-        renderUserUI({
-            inSkeletonElement: skeletonElement,
-            inRows: data
-        });
-    });
-```
+For 2-phase async mounting, filtering, and theme overrides, see the [Table Component Guide](docs/TABLE.md).
 
 ---
 
-## 📋 Form Controls
+## 📋 Form Controls Summary
 
 ### Single-Call Form Rendering (`renderForm`)
 
@@ -159,6 +146,8 @@ const formElement = renderForm({
 
 formContainer.appendChild(formElement);
 ```
+
+For 2-Phase async mounting, SSR HTML string generation, data hydration, and extraction, see the [Form Component Guide](docs/FORM.md).
 
 ---
 
@@ -189,7 +178,6 @@ export const processData = ({ inRows, inConfig }) => {
     const localRows = inRows || [];
     const localConfig = inConfig || {};
 
-    // Use localRows and localConfig throughout function body
     return localRows.map(row => ({ ...row, processed: true }));
 };
 ```
@@ -205,7 +193,7 @@ npx ks-table-builder-from-json --help
 # Initialize sample project configuration
 npx ks-table-builder-from-json init
 
-# Display full API documentation
+# Display documentation overview
 npx ks-table-builder-from-json docs
 
 # View default JSON God Specs
@@ -213,6 +201,16 @@ npx ks-table-builder-from-json defaults
 
 # View integration code snippets
 npx ks-table-builder-from-json usage
+```
+
+---
+
+## 🧪 Running Tests
+
+Run the automated Node.js unit test suite:
+
+```bash
+npm test
 ```
 
 ---

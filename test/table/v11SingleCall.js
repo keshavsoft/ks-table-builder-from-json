@@ -1,4 +1,4 @@
-import { renderTable } from "../../webComponents/v2/core/controls/table/v1/index.js";
+import { renderTable } from "../../webComponents/v3/core/controls/table/v1/index.js";
 
 const tableContainer = document.getElementById("tableContainer");
 const selectionBadge = document.getElementById("selectionBadge");
@@ -19,7 +19,7 @@ if (tableContainer) {
         const localRowElement = inRowElement;
         const itemName = localRowElement.children[1]?.textContent;
         const parentName = localRowElement.children[2]?.textContent;
-        
+
         if (selectionBadge) {
             selectionBadge.textContent = `Selected: ${itemName} (${parentName})`;
             selectionBadge.classList.remove("hidden");

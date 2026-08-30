@@ -19,7 +19,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "test": "echo \"No tests specified yet\" && exit 0",
+    "test": "node --test test/unit.test.js",
     "build": "vite build"
   },
   "repository": {
