@@ -1,4 +1,4 @@
-import { renderTable, renderSkeleton } from "../../webComponents/v3/core/controls/table/v2/index.js";
+import { renderTable, renderSkeleton } from "../../../../webComponents/v3/core/controls/table/v2/index.js";
 
 const tableContainer = document.getElementById("tableContainer");
 const selectionBadge = document.getElementById("selectionBadge");
@@ -27,7 +27,7 @@ if (tableContainer) {
     };
 
     // Table v11 Render (Single-Call pattern with theme, search toolbar, and data mapper)
-    const tableElement = renderSkeleton({
+    const tableElement = renderTable({
         inTheme: "dark",
         inRows: stockRows,
         inOnRowClick: handleRowClick

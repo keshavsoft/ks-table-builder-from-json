@@ -7,7 +7,9 @@
     <title>Table v11 - Single-Call with Search & Mapper | KS Table Builder</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -22,17 +24,26 @@
         }
     </script>
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        h1, h2, h3 { font-family: 'Outfit', sans-serif; }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: 'Outfit', sans-serif;
+        }
     </style>
 </head>
 
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between antialiased selection:bg-indigo-500 selection:text-white">
+<body
+    class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between antialiased selection:bg-indigo-500 selection:text-white">
     <!-- Top Header Navigation -->
     <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
             <div class="flex items-center space-x-3">
-                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-500 to-cyan-400 flex items-center justify-center font-bold text-white shadow-lg shadow-indigo-500/20">
+                <div
+                    class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-500 to-cyan-400 flex items-center justify-center font-bold text-white shadow-lg shadow-indigo-500/20">
                     KS
                 </div>
                 <div>
@@ -40,7 +51,8 @@
                     <p class="text-xs text-slate-400">Zero-Dependency Custom Web Components</p>
                 </div>
             </div>
-            <a href="./index.html" class="inline-flex items-center space-x-2 text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors border border-slate-700">
+            <a href="./index.html"
+                class="inline-flex items-center space-x-2 text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors border border-slate-700">
                 <span>← Back to Table Index</span>
             </a>
         </div>
@@ -49,20 +61,24 @@
     <!-- Main Content Body -->
     <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full flex-grow">
         <!-- Page Title & Feature Badges -->
-        <div class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-800/80 pb-6">
+        <div
+            class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-800/80 pb-6">
             <div>
-                <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 text-xs font-medium mb-3">
+                <div
+                    class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 text-xs font-medium mb-3">
                     <span class="w-2 h-2 rounded-full bg-indigo-400 animate-pulse"></span>
                     <span>Pattern: Single-Call Execution</span>
                 </div>
                 <h2 class="text-3xl font-extrabold text-white tracking-tight">Table v11 — Search & Data Mapper</h2>
                 <p class="text-sm text-slate-400 mt-1 max-w-xl">
-                    Automatic row serial numbering via data mapper layer with real-time in-place search toolbar filtering and instant click callbacks.
+                    Automatic row serial numbering via data mapper layer with real-time in-place search toolbar
+                    filtering and instant click callbacks.
                 </p>
             </div>
-            
+
             <!-- Dynamic Selection Toast/Badge -->
-            <div id="selectionBadge" class="hidden px-4 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500/10 to-indigo-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-semibold shadow-lg backdrop-blur">
+            <div id="selectionBadge"
+                class="hidden px-4 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500/10 to-indigo-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-semibold shadow-lg backdrop-blur">
                 Click a row to select an item...
             </div>
         </div>
@@ -80,7 +96,7 @@
         <p>© 2026 KeshavSoft. ks-table-builder-from-json v1.2.1 • High Performance Form & Table Controls</p>
     </footer>
 
-    <script type="module" src="./v11SingleCall.js"></script>
+    <script type="module" src="./simple.js"></script>
 </body>
 
 </html>
