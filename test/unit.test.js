@@ -1,11 +1,13 @@
 import { test, describe } from "node:test";
 import assert from "node:assert/strict";
 
-// Core Controls & Utilities
-import { prepareTableData } from "../webComponents/v2/core/controls/table/v1/userUI/prepareTableData.js";
-import buildSpecHtml from "../webComponents/v2/htmlCreation/v1/buildSpecHtml.js";
-import applyTheme from "../webComponents/v2/core/controls/table/v1/skeleton/applyTheme.js";
-import { pullInlineAttributes, resolveConfiguration } from "../webComponents/v2/core/pullAttributes.js";
+// Core Controls & Utilities (v3)
+import { prepareTableData } from "../webComponents/v3/core/controls/table/v1/userUI/prepareTableData.js";
+import { resolveColumns } from "../webComponents/v3/core/controls/table/v1/userUI/resolveColumns.js";
+import { buildHeaderRowSpec } from "../webComponents/v3/core/controls/table/v1/userUI/buildHeaderRowSpec.js";
+import buildSpecHtml from "../webComponents/v3/htmlCreation/v1/buildSpecHtml.js";
+import applyTheme from "../webComponents/v3/core/controls/table/v1/skeleton/applyTheme.js";
+import { pullInlineAttributes, resolveConfiguration } from "../webComponents/v3/core/pullAttributes.js";
 
 describe("ks-table-builder-from-json Unit Test Suite", () => {
 
@@ -25,14 +27,21 @@ describe("ks-table-builder-from-json Unit Test Suite", () => {
             assert.equal(prepared[1].StockItemName, "Fabric B");
         });
 
-        test("should fill default missing fields with empty string", () => {
-            const inputRows = [{}];
-            const prepared = prepareTableData({ inRows: inputRows });
+        test("should dynamically resolve column headers from arbitrary JSON rows", () => {
+            const customRows = [
+                { productName: "Laptop", category: "Electronics", price: "$999" }
+            ];
 
-            assert.equal(prepared[0].serialNo, 1);
-            assert.equal(prepared[0].StockItemName, "");
-            assert.equal(prepared[0].StockParentName, "");
-            assert.equal(prepared[0].Uom, "");
+            const columns = resolveColumns({ inRows: customRows });
+            assert.equal(columns.length, 3);
+            assert.equal(columns[0].label, "Product Name");
+            assert.equal(columns[1].label, "Category");
+            assert.equal(columns[2].label, "Price");
+
+            const headerSpec = buildHeaderRowSpec({ inColumns: columns, inShowSerial: true });
+            assert.equal(headerSpec.children.length, 4); // # + 3 columns
+            assert.equal(headerSpec.children[0].textContent, "#");
+            assert.equal(headerSpec.children[1].textContent, "Product Name");
         });
 
         test("should handle empty or null row inputs gracefully", () => {
