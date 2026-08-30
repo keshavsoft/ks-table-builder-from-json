@@ -1,4 +1,4 @@
-import { renderTable } from "../../../../webComponents/v3/core/controls/table/v5/index.js";
+import { renderTable } from "../../../../webComponents/v4/core/controls/table/v5/index.js";
 
 const tableContainer = document.getElementById("tableContainer");
 const selectionBadge = document.getElementById("selectionBadge");
