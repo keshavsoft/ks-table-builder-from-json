@@ -198,6 +198,27 @@ describe("ks-table-builder-from-json Unit Test Suite", () => {
             assert.equal(options.skeletonOptions.inShowSearch, undefined); // Skeleton pipeline stays separate
             assert.ok(Array.isArray(options.renderPipeline));
         });
+        describe("7. renderPipeline Toolbar Removal (v8)", () => {
+        test("should remove entire .table-toolbar element when inShowSearch is false in v8", async () => {
+            const { createSearchTask, runRenderPipeline } = await import("../webComponents/v5/core/controls/table/v8/renderPipeline/index.js");
+            
+            const mockToolbar = { classList: ["table-toolbar"], removed: false, remove() { this.removed = true; } };
+            const mockSkeleton = {
+                querySelector(selector) {
+                    if (selector === ".table-toolbar") return mockToolbar;
+                    return null;
+                }
+            };
+
+            const searchTask = createSearchTask({ inShowSearch: false });
+            runRenderPipeline({
+                inContext: { inSkeletonElement: mockSkeleton },
+                inPipeline: [searchTask]
+            });
+
+            assert.equal(mockToolbar.removed, true);
+        });
     });
 
+});
 });
