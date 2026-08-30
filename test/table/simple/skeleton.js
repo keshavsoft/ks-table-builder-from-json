@@ -1,4 +1,4 @@
-import { renderTable } from "../../../../webComponents/v3/core/controls/table/v1/index.js";
+import { renderSkeleton } from "../../../../webComponents/v3/core/controls/table/v1/index.js";
 
 const tableContainer = document.getElementById("tableContainer");
 const selectionBadge = document.getElementById("selectionBadge");
@@ -27,7 +27,7 @@ if (tableContainer) {
     };
 
     // Table Render (Single-Call orchestrator pattern with light theme)
-    const tableElement = renderTable({
+    const tableElement = renderSkeleton({
         inTheme: "light",
         inRows: stockRows,
         inOnRowClick: handleRowClick
