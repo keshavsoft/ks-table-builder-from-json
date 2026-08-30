@@ -199,26 +199,47 @@ describe("ks-table-builder-from-json Unit Test Suite", () => {
             assert.ok(Array.isArray(options.renderPipeline));
         });
         describe("7. renderPipeline Toolbar Removal (v8)", () => {
-        test("should remove entire .table-toolbar element when inShowSearch is false in v8", async () => {
-            const { createSearchTask, runRenderPipeline } = await import("../webComponents/v5/core/controls/table/v8/renderPipeline/index.js");
-            
-            const mockToolbar = { classList: ["table-toolbar"], removed: false, remove() { this.removed = true; } };
-            const mockSkeleton = {
-                querySelector(selector) {
-                    if (selector === ".table-toolbar") return mockToolbar;
-                    return null;
-                }
-            };
+            test("should remove entire .table-toolbar element when inShowSearch is false in v8", async () => {
+                const { createSearchTask, runRenderPipeline } = await import("../webComponents/v5/core/controls/table/v8/renderPipeline/index.js");
+                
+                const mockToolbar = { classList: ["table-toolbar"], removed: false, remove() { this.removed = true; } };
+                const mockSkeleton = {
+                    querySelector(selector) {
+                        if (selector === ".table-toolbar") return mockToolbar;
+                        return null;
+                    }
+                };
 
-            const searchTask = createSearchTask({ inShowSearch: false });
-            runRenderPipeline({
-                inContext: { inSkeletonElement: mockSkeleton },
-                inPipeline: [searchTask]
+                const searchTask = createSearchTask({ inShowSearch: false });
+                runRenderPipeline({
+                    inContext: { inSkeletonElement: mockSkeleton },
+                    inPipeline: [searchTask]
+                });
+
+                assert.equal(mockToolbar.removed, true);
             });
-
-            assert.equal(mockToolbar.removed, true);
         });
-    });
 
+        describe("8. Responsibility-Grouped Options Resolver (v9)", () => {
+            test("should resolve grouped responsibility objects (inTable, inTheme, inVisibility, inEvents)", async () => {
+                const { resolveTableOptions } = await import("../webComponents/v5/core/controls/table/v9/options/resolveTableOptions.js");
+
+                const options = resolveTableOptions({
+                    inTable: { inRows: [{ item: "GroupedRow" }] },
+                    inTheme: { inTheme: "dark" },
+                    inVisibility: { inShowSearch: false, inShowFooter: false },
+                    inEvents: { inOnRowClick: () => {} }
+                });
+
+                assert.equal(options.table.rows.length, 1);
+                assert.equal(options.table.rows[0].item, "GroupedRow");
+                assert.equal(options.theme.theme, "dark");
+                assert.equal(options.visibility.showSearch, false);
+                assert.equal(options.visibility.showFooter, false);
+                assert.equal(typeof options.events.onRowClick, "function");
+            });
+        });
+
+    });
 });
-});
+

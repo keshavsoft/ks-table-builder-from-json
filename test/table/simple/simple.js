@@ -1,4 +1,4 @@
-import { renderTable } from "../../../../webComponents/v5/core/controls/table/v8/index.js";
+import { renderTable } from "../../../../webComponents/v5/core/controls/table/v10/index.js";
 
 const tableContainer = document.getElementById("tableContainer");
 const selectionBadge = document.getElementById("selectionBadge");
@@ -26,14 +26,16 @@ if (tableContainer) {
         }
     };
 
-    // Table Render (Single-Call orchestrator pattern with light theme)
+    // Table Render (v9 Single-Call orchestrator pattern with responsibility-grouped options)
     const tableElement = renderTable({
-        inTheme: "light",
-        inRows: stockRows,
-        inOnRowClick: handleRowClick,
-        inShowFooter: false,
-        inShowSerial: false,
-        inShowSearch: false
+        inTheme: { inTheme: "light" },
+        inTable: { inRows: stockRows },
+        inEvents: { inOnRowClick: handleRowClick },
+        inVisibility: {
+            inShowFooter: false,
+            inShowSerial: false,
+            inShowSearch: true
+        }
     });
 
     if (tableElement) {
