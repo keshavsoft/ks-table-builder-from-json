@@ -1,4 +1,4 @@
-import { renderTable } from "../../../../webComponents/v5/core/controls/table/v7/index.js";
+import { renderTable } from "../../../../webComponents/v5/core/controls/table/v8/index.js";
 
 const tableContainer = document.getElementById("tableContainer");
 const selectionBadge = document.getElementById("selectionBadge");
@@ -33,7 +33,7 @@ if (tableContainer) {
         inOnRowClick: handleRowClick,
         inShowFooter: false,
         inShowSerial: false,
-        inShowSearch: true
+        inShowSearch: false
     });
 
     if (tableElement) {

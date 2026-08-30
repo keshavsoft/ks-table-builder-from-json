@@ -182,5 +182,22 @@ describe("ks-table-builder-from-json Unit Test Suite", () => {
         });
     });
 
-});
+    describe("6. resolveTableOptions Options Resolver (v7)", () => {
+        test("should normalize input options and produce structured config buckets", async () => {
+            const { resolveTableOptions } = await import("../webComponents/v5/core/controls/table/v7/options/resolveTableOptions.js");
 
+            const options = resolveTableOptions({
+                inRows: [{ item: "X" }],
+                inShowSearch: false,
+                inTheme: "dark"
+            });
+
+            assert.deepEqual(options.rows, [{ item: "X" }]);
+            assert.equal(options.showSearch, false);
+            assert.equal(options.skeletonOptions.inTheme, "dark");
+            assert.equal(options.skeletonOptions.inShowSearch, undefined); // Skeleton pipeline stays separate
+            assert.ok(Array.isArray(options.renderPipeline));
+        });
+    });
+
+});
