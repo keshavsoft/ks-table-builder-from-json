@@ -159,4 +159,28 @@ describe("ks-table-builder-from-json Unit Test Suite", () => {
         });
     });
 
+    describe("5. renderPipeline Component Engine (v6)", () => {
+        test("should run render tasks and remove #tableSearchInput DOM element when inShowSearch is false", async () => {
+            const { createSearchTask, runRenderPipeline } = await import("../webComponents/v5/core/controls/table/v6/renderPipeline/index.js");
+            
+            // Mock container element with search input child
+            const mockSearchInput = { id: "tableSearchInput", removed: false, remove() { this.removed = true; } };
+            const mockSkeleton = {
+                querySelector(selector) {
+                    if (selector === "#tableSearchInput") return mockSearchInput;
+                    return null;
+                }
+            };
+
+            const searchTask = createSearchTask({ inShowSearch: false });
+            runRenderPipeline({
+                inContext: { inSkeletonElement: mockSkeleton },
+                inPipeline: [searchTask]
+            });
+
+            assert.equal(mockSearchInput.removed, true);
+        });
+    });
+
 });
+
