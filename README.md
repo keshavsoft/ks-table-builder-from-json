@@ -1,220 +1,384 @@
 # ks-table-builder-from-json
 
-> Zero-dependency, high-performance Custom HTML Web Components and 3-Layer JavaScript architecture for dynamic Data Tables and Vertical Forms built with Tailwind CSS design tokens.
+> A JSON-driven UI rendering architecture for building Tables, Forms, and other components from declarative specifications.
 
-[![npm version](https://img.shields.io/npm/v/ks-table-builder-from-json.svg)](https://www.npmjs.com/package/ks-table-builder-from-json)
-[![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
-[![Zero Dependencies](https://img.shields.io/badge/dependencies-0-success.svg)](https://github.com/keshavsoft/ks-table-builder-from-json)
-[![Node Tests](https://img.shields.io/badge/tests-passing-brightgreen.svg)](test/unit.test.js)
+## Architecture at a Glance
 
----
+The central idea is:
 
-## 📖 Documentation Suite
+~~~text
+God JSON / UI Specification
+          |
+          v
+   Transformation Pipeline
+          |
+          |-- Theme
+          |-- Header
+          |-- Body
+          |-- Footer
+          |-- Serial / UI columns
+          |-- Custom transformations
+          |
+          v
+   Resolved JSON Specification
+          |
+          v
+   Recursive Spec Builder
+          |
+          v
+          DOM
+~~~
 
-Explore the comprehensive guides and specs for `ks-table-builder-from-json`:
+The important principle is:
 
-| Document Guide | Description |
-| :--- | :--- |
-| 📊 [**Table Component Specification**](docs/TABLE.md) | Full guide to Table v11, single-call vs 2-phase async mounting, in-place search, themes, and data mapping. |
-| 📋 [**Form Component Specification**](docs/FORM.md) | Guide to Form v7, 3-layer architecture, single-call, 2-phase async, SSR HTML string generation, data hydration, and extraction. |
-| 🏛️ [**System Architecture & Internals**](docs/ARCHITECTURE.md) | Internal architecture, 3-Layer Orchestration Pattern, Web Components layer, and parameter naming rules. |
-| 📖 [**API Reference Manual**](docs/API.md) | Full API reference for Table, Form, Core Helpers, DOM Creation Engine, HTML Generator, and Web Components. |
-| 🧱 [**JSON-Driven Rendering & Specs**](docs/JSON_DRIVEN_RENDERING.md) | Breakdown of JSON spec trees, God Specs (`tableGodSpec.json`, `formGodSpec.json`), and `buildSpecElement`. |
-| 🌐 [**HTML String Generation & SSR**](docs/HTML_GENERATION.md) | Details on `buildSpecHtml` for Server-Side Rendering (SSR), HTML escaping, and void elements. |
-| 🎨 [**Tailwind CSS Tokens & JSON Themes**](docs/TAILWIND_CLASSES.md) | Guide to `themes.json`, `applyTheme` recursive spec merging, and class token injection. |
-
----
-
-## 🌟 Key Features
-
-- **🚀 Zero Runtime Dependencies**: Pure vanilla JavaScript & Custom HTML Web Components with zero third-party framework overhead.
-- **🏗️ 3-Layer Orchestration Architecture**: Strict separation between Layout Shell (Skeleton), Event Listener Hooks, and User UI Hydration.
-- **🔍 Built-in Real-Time In-Place Search**: Real-time filtering toolbar that refreshes the `tbody` slot container dynamically without re-mounting the layout shell.
-- **🔢 Automated Data Mapping**: Computes serial numbers (`serialNo`), formats row values, and standardizes record schemas transparently.
-- **🎨 5 Built-in Themes**: `dark`, `extra-dark`, `medium`, `light`, and `extra-light` theme spec overrides out of the box.
-- **💻 Dual Execution Modes**: Support for single-call synchronous rendering or 2-phase asynchronous skeleton mounting (ideal for REST API data fetching).
-- **🌐 Custom Web Components**: Custom elements (`<ks-table-base>`, `<ks-cell-base>`, `<ks-wrapper-base>`) with inline attribute parser (`ks-*`).
-- **🛠️ Built-in CLI**: Scaffolding, defaults inspection, and documentation CLI helper (`npx ks-table-builder-from-json`).
+**Describe the UI first. Transform the description second. Create the DOM last.**
 
 ---
 
-## 🏛️ Architecture Overview
+## 1. Declarative UI
 
-The library operates on a strict **3-Layer Architectural Pattern** designed for high throughput, predictable event handling, and clean SSR/hydration separation.
+The UI is first represented as JSON.
 
-```mermaid
-flowchart TD
-    A[Input Data & Config] --> B[Layer 1: Skeleton Shell Creation]
-    B -->|DOM Shell Node / HTML String| C[Layer 2: Event Binding Hooks]
-    C -->|Hooked Search & Click/Submit| D[Layer 3: User UI & Data Hydration]
-    D --> E[Rendered Table / Form DOM Element]
+The specification describes:
 
-    subgraph Layer 1: Skeleton Shell
-        B1[renderSkeleton]
-        B2[renderSkeletonHtml]
-        B3[applyTheme]
-    end
+- element type
+- attributes
+- properties
+- text
+- children
+- events
+- structural relationships
 
-    subgraph Layer 2: Event Hooks
-        C1[bindSkeletonEvents]
-        C2[handleSearch In-Place Filter]
-    end
+For example:
 
-    subgraph Layer 3: User UI & Data
-        D1[prepareTableData - Mapper]
-        D2[renderUserUI - Slot Mounting]
-        D3[hydrateFormData]
-    end
-```
+~~~json
+{
+  "tagName": "table",
+  "children": [
+    {
+      "tagName": "thead"
+    },
+    {
+      "tagName": "tbody"
+    },
+    {
+      "tagName": "tfoot"
+    }
+  ]
+}
+~~~
 
-For full details, read the [System Architecture Guide](docs/ARCHITECTURE.md).
+At this stage, no DOM has been created.
 
----
-
-## ⚡ Quickstart
-
-### Installation
-
-```bash
-npm install ks-table-builder-from-json
-```
-
-Or initialize via CLI:
-
-```bash
-npx ks-table-builder-from-json init
-```
+It is only a description of the UI.
 
 ---
 
-## 📊 Table Controls Summary
+## 2. Transformation Pipeline
 
-### Single-Call Table Rendering (`renderTable`)
+The specification is passed through a sequence of small transformation tasks.
 
-```javascript
-import { renderTable } from "ks-table-builder-from-json";
+~~~text
+Base Spec
+   |
+   v
+Theme
+   |
+   v
+Header
+   |
+   v
+Body
+   |
+   v
+Footer
+   |
+   v
+Serial / UI columns
+   |
+   v
+Custom transformations
+   |
+   v
+Resolved Spec
+~~~
 
-const tableContainer = document.getElementById("tableContainer");
+Each task has one responsibility.
 
-const stockRows = [
-    { StockItemName: "0.09/30mm", StockParentName: "FISH KNITTED FABRIC", Uom: "kgs" },
-    { StockItemName: "0.11-25", StockParentName: "FISH KNITTED FABRIC", Uom: "kgs" },
-    { StockItemName: "0.14/30mm", StockParentName: "COTTON FABRIC", Uom: "meters" }
-];
+The generic pipeline runner does not know that it is processing a table.
 
-const handleRowClick = ({ inRowElement, inEvent }) => {
-    const itemName = inRowElement.children[1]?.textContent;
-    alert(`Selected: ${itemName}`);
-};
+It simply passes the current specification from one task to the next.
 
-const tableElement = renderTable({
-    inTheme: "dark", // "dark" | "extra-dark" | "medium" | "light" | "extra-light"
-    inRows: stockRows,
-    inOnRowClick: handleRowClick
+---
+
+## 3. Structure and Appearance Are Separate
+
+The **God Spec** describes the structure.
+
+The **Theme Spec** describes appearance.
+
+~~~text
+God Spec
+   +
+Theme Spec
+   |
+   v
+Transformed Spec
+~~~
+
+Themes can be selected by name without exposing framework classes to the consumer.
+
+For example:
+
+~~~js
+{
+    inTheme: "dark"
+}
+~~~
+
+The renderer does not need to understand what `"dark"` means.
+
+The theme transformation supplies the appropriate classes.
+
+---
+
+## 4. Recursive DOM Creation
+
+After all transformations are complete, the resolved specification is converted into DOM.
+
+~~~text
+JSON Spec
+   |
+   +--> create element
+   |
+   +--> apply properties
+   |
+   +--> apply attributes
+   |
+   +--> attach events
+   |
+   +--> recursively build children
+   |
+   v
+DOM Tree
+~~~
+
+The recursive builder is generic.
+
+It does not contain table-specific logic.
+
+That means the same DOM infrastructure can later support:
+
+- Table
+- Form
+- Vertical Form
+- Horizontal Form
+- Filter UI
+- Card UI
+- Other components
+
+---
+
+## 5. Table Architecture
+
+The Table is a consumer of this architecture.
+
+A table can be described through:
+
+- data
+- columns
+- headers
+- body
+- footers
+- UI columns
+- search
+- serial column
+- theme
+- rendering options
+
+The table renderer coordinates these pieces.
+
+The generic DOM builder does not know anything about them.
+
+---
+
+## 6. Data and UI Separation
+
+Source data should remain separate from UI-generated information.
+
+Conceptually:
+
+~~~text
+data
+├── originalData
+├── stateData
+└── uiData
+~~~
+
+For example, serial numbers, selection state, filtered data, or other UI-derived values should not require modifying the original source data.
+
+This keeps the original dataset as the source of truth.
+
+---
+
+## 7. Columns
+
+Columns can follow the same separation.
+
+Conceptually:
+
+~~~text
+columns
+├── originalColumns
+├── uiColumns
+├── headerColumns
+├── bodyColumns
+└── footerColumns
+~~~
+
+This allows the table to introduce UI-specific columns such as:
+
+- serial number
+- options/actions
+- checkbox
+- input
+- computed values
+
+without changing the fundamental rendering engine.
+
+---
+
+## 8. Section-Specific Configuration
+
+The table naturally consists of:
+
+~~~text
+table
+├── thead
+├── tbody
+└── tfoot
+~~~
+
+Each section can have its own configuration.
+
+For example:
+
+~~~text
+Header columns
+Body columns
+Footer columns
+~~~
+
+This allows a column to exist in one section without requiring it to appear in another.
+
+---
+
+## 9. Web Component Boundary
+
+The Web Component should remain thin.
+
+Conceptually:
+
+~~~text
+<ks-table-base>
+       |
+       v
+    config
+       |
+       v
+ table renderer
+       |
+       v
+  resolved DOM
+~~~
+
+The component should coordinate the rendering process rather than becoming another DOM engine.
+
+---
+
+## 10. Forms
+
+The same architecture can be reused for Forms.
+
+~~~text
+Form Spec
+    |
+    v
+Form Pipeline
+    |
+    v
+Resolved Form Spec
+    |
+    v
+Recursive DOM Builder
+    |
+    v
+Form DOM
+~~~
+
+Different presentation styles can then become different renderers:
+
+~~~text
+Schema
+  |
+  +--> Table
+  |
+  +--> Vertical Form
+  |
+  +--> Horizontal Form
+  |
+  +--> Filter Form
+~~~
+
+The data/configuration describes the information.
+
+The renderer determines the presentation.
+
+---
+
+## 11. Public API Philosophy
+
+The consumer should ideally provide configuration rather than manually constructing DOM.
+
+For example:
+
+~~~js
+const table = renderTable({
+    inRows: rows,
+    inTheme: "light"
 });
+~~~
 
-tableContainer.appendChild(tableElement);
-```
+The internal architecture handles:
 
-For 2-phase async mounting, filtering, and theme overrides, see the [Table Component Guide](docs/TABLE.md).
+- specification
+- transformations
+- themes
+- data mapping
+- DOM creation
+- events
+- section rendering
 
----
-
-## 📋 Form Controls Summary
-
-### Single-Call Form Rendering (`renderForm`)
-
-```javascript
-import { renderForm } from "ks-table-builder-from-json";
-
-const formContainer = document.getElementById("formContainer");
-
-const fields = [
-    { name: "username", label: "Username", type: "text", placeholder: "Enter username" },
-    { name: "email", label: "Email Address", type: "email", placeholder: "name@example.com" }
-];
-
-const handleSubmit = ({ inFormData, inEvent }) => {
-    console.log("Form Submitted Data:", inFormData);
-};
-
-const formElement = renderForm({
-    inFields: fields,
-    inData: { username: "Keshav", email: "keshav@example.com" },
-    inOnSubmit: handleSubmit
-});
-
-formContainer.appendChild(formElement);
-```
-
-For 2-Phase async mounting, SSR HTML string generation, data hydration, and extraction, see the [Form Component Guide](docs/FORM.md).
+This keeps application code small and declarative.
 
 ---
 
-## 🏷️ Custom Web Components
+## 12. Documentation
 
-Register and use custom HTML tags directly in HTML or JavaScript:
+For the detailed internal architecture, see:
 
-```html
-<!-- Custom Table Element -->
-<ks-table-base ks-theme="dark"></ks-table-base>
+**[DETAILS.md](DETAILS.md)**
 
-<!-- Custom Cell Element -->
-<ks-cell-base ks-type="input" ks-placeholder="Enter item name..."></ks-cell-base>
-```
+This README explains the mental model.
+
+`DETAILS.md` follows the runtime flow and explains how the individual layers cooperate.
 
 ---
 
-## 📐 Parameter Naming Convention
+## Core Principle
 
-All functions in this library follow a strict **Input Parameter & Local Variable convention**:
+> **Describe the UI first. Transform the description second. Create the DOM last.**
 
-1. **Named Object Input**: All parameters are destructured from a single configuration object.
-2. **`in`-Prefixed Parameters**: Input keys are always prefixed with `in` (e.g., `inRows`, `inSpec`, `inOnRowClick`).
-3. **`local`-Prefixed Variables**: Immediately inside the function body, `in` parameters are assigned to `local`-prefixed variables.
+The Table is currently the main consumer of this architecture.
 
-```javascript
-export const processData = ({ inRows, inConfig }) => {
-    const localRows = inRows || [];
-    const localConfig = inConfig || {};
-
-    return localRows.map(row => ({ ...row, processed: true }));
-};
-```
-
----
-
-## 🖥️ CLI Commands
-
-```bash
-# Print help menu
-npx ks-table-builder-from-json --help
-
-# Initialize sample project configuration
-npx ks-table-builder-from-json init
-
-# Display documentation overview
-npx ks-table-builder-from-json docs
-
-# View default JSON God Specs
-npx ks-table-builder-from-json defaults
-
-# View integration code snippets
-npx ks-table-builder-from-json usage
-```
-
----
-
-## 🧪 Running Tests
-
-Run the automated Node.js unit test suite:
-
-```bash
-npm test
-```
-
----
-
-## 📜 License
-
-Distributed under the **ISC License**. Created with ❤️ by [KeshavSoft](https://github.com/keshavsoft).
+The larger goal is a reusable foundation where the same specification, transformation, and DOM infrastructure can support multiple UI renderers.
