@@ -32,7 +32,7 @@ if (tableContainer) {
         inRows: stockRows,
         inOnRowClick: handleRowClick,
         inShowFooter: false,
-        inShowSerial: true
+        inShowSerial: false
     });
 
     if (tableElement) {

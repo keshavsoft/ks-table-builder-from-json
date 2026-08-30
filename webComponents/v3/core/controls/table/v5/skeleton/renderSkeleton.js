@@ -1,11 +1,11 @@
 import buildSpecElement from "../../../../../domCreation/v2/buildSpecElement.js";
 import defaultGodSpec from "../tableGodSpec.json" with { type: "json" };
 import resolveThemeSpec from "../themes/index.js";
-import applySpecPipeline from "../specTransform/pipeline.js";
+import { runPipeline, buildTablePipeline } from "../specTransform/index.js";
 
 /**
  * Layer 1: Table Skeleton Render
- * Runs modular spec transformation pipeline outside, then constructs DOM elements via buildSpecElement.
+ * Runs modular pipeline array of single-task spec transformers, then mounts live DOM elements via buildSpecElement.
  */
 export const renderSkeleton = ({
     inSpec,
@@ -15,7 +15,8 @@ export const renderSkeleton = ({
     inShowSerial = true,
     inShowHeader = true,
     inShowBody = true,
-    inShowFooter = true
+    inShowFooter = true,
+    inPipeline
 }) => {
     const localSpec = inSpec || defaultGodSpec;
     const localShowSerial = inShowSerial !== false;
@@ -25,14 +26,21 @@ export const renderSkeleton = ({
 
     const resolvedThemeSpec = resolveThemeSpec({ inTheme, inThemeName, inThemeSpec });
 
-    // Execute modular spec transformation pipeline (Theme -> Sections -> Serial Column)
-    const resolvedSpec = applySpecPipeline({
+    // Build pipeline array of task functions or use custom inPipeline
+    const pipeline = Array.isArray(inPipeline) && inPipeline.length > 0
+        ? inPipeline
+        : buildTablePipeline({
+            inThemeSpec: resolvedThemeSpec,
+            inShowHeader: localShowHeader,
+            inShowBody: localShowBody,
+            inShowFooter: localShowFooter,
+            inShowSerial: localShowSerial
+        });
+
+    // Execute the spec pipeline!
+    const resolvedSpec = runPipeline({
         inSpec: localSpec,
-        inThemeSpec: resolvedThemeSpec,
-        inShowHeader: localShowHeader,
-        inShowBody: localShowBody,
-        inShowFooter: localShowFooter,
-        inShowSerial: localShowSerial
+        inPipeline: pipeline
     });
 
     // Build DOM tree skeleton for table & toolbar from transformed Spec
