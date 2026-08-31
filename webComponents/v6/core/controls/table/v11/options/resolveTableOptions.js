@@ -59,13 +59,28 @@ export const resolveTableOptions = ({
     const onRowClick = localEvents.inOnRowClick || localEvents.onRowClick || inOnRowClick || restFlatOptions.inOnRowClick;
     const onSearch = localEvents.inOnSearch || localEvents.onSearch || inOnSearch || restFlatOptions.inOnSearch;
 
-    // 5. Resolve Pipeline Config
+    // 5. Resolve Skeleton Options
+    const skeletonOptions = {
+        inSpec: spec,
+        inTheme: theme,
+        inThemeName: themeName,
+        inThemeSpec: themeSpec,
+        inShowSerial: showSerial,
+        inShowHeader: showHeader,
+        inShowBody: showBody,
+        inShowFooter: showFooter
+    };
+
+    // 6. Resolve Pipeline Config
     const localPipelineObj = typeof inPipeline === "object" && inPipeline !== null ? inPipeline : {};
     const rawRenderPipeline = localPipelineObj.inRenderPipeline || localPipelineObj.renderPipeline || inRenderPipeline || restFlatOptions.inRenderPipeline;
 
     const renderPipeline = Array.isArray(rawRenderPipeline) && rawRenderPipeline.length > 0
         ? rawRenderPipeline
-        : buildRenderPipeline({ inShowSearch: showSearch });
+        : buildRenderPipeline({
+            inShowSearch: showSearch,
+            inSkeletonOptions: skeletonOptions
+        });
 
     return {
         table: { rows, headers },
@@ -85,16 +100,7 @@ export const resolveTableOptions = ({
         showBody,
         showFooter,
         renderPipeline,
-        skeletonOptions: {
-            inSpec: spec,
-            inTheme: theme,
-            inThemeName: themeName,
-            inThemeSpec: themeSpec,
-            inShowSerial: showSerial,
-            inShowHeader: showHeader,
-            inShowBody: showBody,
-            inShowFooter: showFooter
-        }
+        skeletonOptions
     };
 };
 

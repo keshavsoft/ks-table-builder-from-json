@@ -33,7 +33,7 @@ if (tableContainer) {
         inEvents: { inOnRowClick: handleRowClick },
         inVisibility: {
             inShowFooter: false,
-            inShowSerial: false,
+            inShowSerial: true,
             inShowSearch: true
         }
     });

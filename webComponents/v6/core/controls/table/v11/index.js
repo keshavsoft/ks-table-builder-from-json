@@ -18,7 +18,7 @@ export const renderTable = (inOptions = {}) => {
 
     // Step 2: Layer 1 - Build Layout Skeleton DOM Shell
     const skeletonElement = renderSkeleton(options.skeletonOptions);
-
+    debugger
     // Step 3: Layer 1b - Execute Render Component Pipeline
     runRenderPipeline({
         inContext: { inSkeletonElement: skeletonElement },
