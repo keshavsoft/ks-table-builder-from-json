@@ -3,6 +3,7 @@ import resolveTableOptions from "./options/resolveTableOptions.js";
 import domCreationFuncs from "../../../../domCreation/index.js";
 
 import tableLayoutSpec from "./tableLayoutSpec.json" with { type: "json" };
+console.log("16666666666");
 
 export const renderTable = (inOptions = {}) => {
     const localOptions = inOptions;

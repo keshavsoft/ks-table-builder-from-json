@@ -1,4 +1,4 @@
-import { renderTable } from "../../../../webComponents/v6/core/controls/table/v14/index.js";
+import { renderTable } from "../../../../webComponents/v6/core/controls/table/v16/index.js";
 
 const tableContainer = document.getElementById("tableContainer");
 const selectionBadge = document.getElementById("selectionBadge");
@@ -32,9 +32,8 @@ if (tableContainer) {
         inTable: { inRows: stockRows },
         inEvents: { inOnRowClick: handleRowClick },
         inVisibility: {
-            inShowFooter: false,
-            inShowSerial: true,
-            inShowSearch: true
+            showSearch: false,
+            showTable: true
         }
     });
 
