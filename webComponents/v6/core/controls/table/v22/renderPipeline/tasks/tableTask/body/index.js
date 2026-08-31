@@ -1,31 +1,24 @@
 import buildBodyRowsSpec from "./buildBodyRowsSpec.js";
-import attachBodyRowsToTbody from "./attachBodyRowsToTbody.js";
 
 /**
- * Body Module Orchestrator: Builds and attaches <tbody> rows to tableSpec
+ * Body Module: Pure function returning <tbody> <tr> row specs array
  */
-export const buildBody = ({ inTableSpec, inData, inColumns, inTrSpec, inTdSpec }) => {
-    const localTableSpec = inTableSpec;
+export const buildBody = ({ inData, inColumns, inTrSpec, inTdSpec }) => {
     const localData = inData || [];
     const localColumns = inColumns || [];
     const localTrSpec = inTrSpec;
     const localTdSpec = inTdSpec;
 
-    if (Array.isArray(localData) && localData.length > 0 && localTrSpec && localTdSpec) {
-        const bodyRows = buildBodyRowsSpec({
-            inData: localData,
-            inColumns: localColumns,
-            inTrSpec: localTrSpec,
-            inTdSpec: localTdSpec
-        });
-
-        attachBodyRowsToTbody({
-            inTableSpec: localTableSpec,
-            inBodyRows: bodyRows
-        });
+    if (!Array.isArray(localData) || localData.length === 0 || !localTrSpec || !localTdSpec) {
+        return [];
     }
 
-    return localTableSpec;
+    return buildBodyRowsSpec({
+        inData: localData,
+        inColumns: localColumns,
+        inTrSpec: localTrSpec,
+        inTdSpec: localTdSpec
+    });
 };
 
 export default buildBody;

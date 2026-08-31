@@ -1,29 +1,24 @@
 import buildHeaderRowSpec from "./buildHeaderRowSpec.js";
-import attachHeaderRowToThead from "./attachHeaderRowToThead.js";
 
 /**
- * Head Module Orchestrator: Builds and attaches <thead> rows to tableSpec
+ * Head Module: Pure function returning <thead> <tr> row specs array
  */
-export const buildHead = ({ inTableSpec, inColumns, inTrSpec, inThSpec }) => {
-    const localTableSpec = inTableSpec;
+export const buildHead = ({ inColumns, inTrSpec, inThSpec }) => {
     const localColumns = inColumns || [];
     const localTrSpec = inTrSpec;
     const localThSpec = inThSpec;
 
-    if (Array.isArray(localColumns) && localColumns.length > 0 && localTrSpec && localThSpec) {
-        const headerRow = buildHeaderRowSpec({
-            inColumns: localColumns,
-            inTrSpec: localTrSpec,
-            inThSpec: localThSpec
-        });
-
-        attachHeaderRowToThead({
-            inTableSpec: localTableSpec,
-            inHeaderRow: headerRow
-        });
+    if (!Array.isArray(localColumns) || localColumns.length === 0 || !localTrSpec || !localThSpec) {
+        return [];
     }
 
-    return localTableSpec;
+    const headerRow = buildHeaderRowSpec({
+        inColumns: localColumns,
+        inTrSpec: localTrSpec,
+        inThSpec: localThSpec
+    });
+
+    return [headerRow];
 };
 
 export default buildHead;
