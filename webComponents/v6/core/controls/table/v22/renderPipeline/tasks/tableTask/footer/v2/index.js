@@ -1,4 +1,5 @@
-import buildSummaryRow from "./summaryRow/v2/index.js";
+import getSummaryRow from "./summaryRow/v2/index.js";
+import getBalanceRow from "./balanceRow/v1/index.js";
 
 /**
  * Footer Module (v2): Pure function returning <tfoot> <tr> row specs array or null
@@ -13,30 +14,40 @@ export const buildFooter = ({
 }) => {
     const localFooterConfig = inFooterConfig;
     const localHasFooterConfig = inHasFooterConfig;
-    const localColumns = inColumns || [];
-    const localData = inData || [];
-    const localTrSpec = inTrSpec;
-    const localThSpec = inThSpec;
 
-    if (!localHasFooterConfig) {
+
+    if (!localHasFooterConfig || !localFooterConfig || typeof localFooterConfig !== "object") {
         return null;
     }
 
     const footerRows = [];
-
-    // 1. Handle summaryRow configuration via self-contained summaryRow/v1 module
-    if (localFooterConfig?.summaryRow && typeof localFooterConfig.summaryRow === "object") {
-        const summaryRowSpec = buildSummaryRow({
+    debugger
+    // Process summaryRow configuration via self-contained summaryRow/v2 module
+    if (localFooterConfig.summaryRow && typeof localFooterConfig.summaryRow === "object") {
+        const summaryRowSpec = getSummaryRow({
             inSummaryConfig: localFooterConfig.summaryRow,
-            inColumns: localColumns,
-            inData: localData,
-            inTrSpec: localTrSpec,
-            inThSpec: localThSpec
+            inColumns,
+            inData,
+            inTrSpec,
+            inThSpec
         });
         if (summaryRowSpec) {
             footerRows.push(summaryRowSpec);
         }
     }
+
+    if (localFooterConfig.balanceRow && typeof localFooterConfig.balanceRow === "object") {
+        const balanceRowSpec = getBalanceRow({
+            inBalanceConfig: localFooterConfig.balanceRow,
+            inColumns,
+            inData,
+            inTrSpec,
+            inThSpec
+        });
+        if (balanceRowSpec) {
+            footerRows.push(balanceRowSpec);
+        };
+    };
 
     return footerRows;
 };

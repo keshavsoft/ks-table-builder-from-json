@@ -1,9 +1,9 @@
-import buildSummaryRowCellSpec from "./buildSummaryRowCellSpec.js";
+import getTh from "./getTh.js";
 
 /**
- * Helper: Builds <tr> summary row spec containing <th> cell specs for all columns
+ * Helper: Generates summary <tr> row spec containing <th> cell specs for all columns
  */
-export const buildSummaryRowSpec = ({ inSummaryConfig, inColumns, inData, inTrSpec, inThSpec }) => {
+export const getRow = ({ inSummaryConfig, inColumns, inData, inTrSpec, inThSpec }) => {
     const localSummaryConfig = inSummaryConfig || {};
     const localColumns = inColumns || [];
     const localData = inData || [];
@@ -18,7 +18,7 @@ export const buildSummaryRowSpec = ({ inSummaryConfig, inColumns, inData, inTrSp
 
         const funcType = localSummaryConfig[keyName];
 
-        return buildSummaryRowCellSpec({
+        return getTh({
             inColumnKey: keyName,
             inFuncType: funcType,
             inData: localData,
@@ -29,4 +29,4 @@ export const buildSummaryRowSpec = ({ inSummaryConfig, inColumns, inData, inTrSp
     return trNode;
 };
 
-export default buildSummaryRowSpec;
+export default getRow;

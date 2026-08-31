@@ -44,6 +44,11 @@ if (tableContainer) {
                         StockItemName: "count",
                         StockParentName: "max",
                         Rate: "min"
+                    },
+                    balanceRow: {
+                        StockItemName: "count",
+                        StockParentName: "max",
+                        Rate: "min"
                     }
                 }
             }

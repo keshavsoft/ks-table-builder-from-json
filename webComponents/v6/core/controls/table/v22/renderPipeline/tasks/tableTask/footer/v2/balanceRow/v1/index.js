@@ -3,19 +3,19 @@ import getRow from "./getRow.js";
 /**
  * Summary Row Module (v2): Self-contained summary row builder with explanatory function names
  */
-export const getSummaryRow = ({ inSummaryConfig, inColumns, inData, inTrSpec, inThSpec }) => {
-    const localSummaryConfig = inSummaryConfig;
+export const getSummaryRow = ({ inBalanceConfig, inColumns, inData, inTrSpec, inThSpec }) => {
+    const localBalanceConfig = inBalanceConfig;
     const localColumns = inColumns || [];
     const localData = inData || [];
     const localTrSpec = inTrSpec;
     const localThSpec = inThSpec;
 
-    if (!localSummaryConfig || typeof localSummaryConfig !== "object" || !localTrSpec || !localThSpec) {
+    if (!localBalanceConfig || typeof localBalanceConfig !== "object" || !localTrSpec || !localThSpec) {
         return null;
-    }
+    };
 
     return getRow({
-        inSummaryConfig: localSummaryConfig,
+        inConfig: localBalanceConfig,
         inColumns: localColumns,
         inData: localData,
         inTrSpec: localTrSpec,

@@ -1,9 +1,9 @@
 import calculateAggregate from "./aggregateFunctions.js";
 
 /**
- * Helper: Builds individual <th> summary row cell spec for a column
+ * Helper: Generates individual <th> summary cell spec for a column
  */
-export const buildSummaryRowCellSpec = ({ inColumnKey, inFuncType, inData, inThSpec }) => {
+export const getTh = ({ inColumnKey, inFuncType, inData, inThSpec }) => {
     const localColumnKey = inColumnKey;
     const localFuncType = inFuncType;
     const localData = inData || [];
@@ -21,4 +21,4 @@ export const buildSummaryRowCellSpec = ({ inColumnKey, inFuncType, inData, inThS
     return thNode;
 };
 
-export default buildSummaryRowCellSpec;
+export default getTh;
