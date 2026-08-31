@@ -1,9 +1,9 @@
-import { getObject as getSummaryObject } from "../v2/summaryRow/v3/index.js";
-import { getObject as getBalanceObject } from "../v2/balanceRow/v2/index.js";
+import { getObject as getSummaryObject } from "./summaryRow/index.js";
+import { getObject as getBalanceObject } from "./balanceRow/index.js";
 import buildFooterRowSpec from "./buildFooterRowSpec.js";
 
 /**
- * Footer Module (v3): Two-step Pipeline
+ * Footer Module (v3): Fully self-contained Two-step Pipeline
  * Step 1: Arrive at ALL footer row data objects first (summaryRowObject, balanceRowObject, etc.)
  * Step 2: Loop through data objects array and render each on-the-fly into <tr> row specs
  */

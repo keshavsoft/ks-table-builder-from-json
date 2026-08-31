@@ -49,7 +49,9 @@ if (tableContainer) {
                         StockItemName: "111",
                         Credit: "Credit-Debit",
                         Debit: "Debit-Credit"
-                    }
+                    },
+                    inputsRow: ["StockItemName", "Credit", "Debit"],
+                    inputsRow: ["StockParentName", "Credit", "Debit"]
                 }
             }
         }

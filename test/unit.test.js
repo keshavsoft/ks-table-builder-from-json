@@ -245,7 +245,8 @@ describe("ks-table-builder-from-json Unit Test Suite", () => {
             test("should calculate summary row data object in Phase 1 and build row spec in Phase 2", async () => {
                 const { buildFooter } = await import("../webComponents/v6/core/controls/table/v22/renderPipeline/tasks/tableTask/footer/v3/index.js");
 
-                const { getObject, getRow } = await import("../webComponents/v6/core/controls/table/v22/renderPipeline/tasks/tableTask/footer/v2/summaryRow/v3/index.js");
+                const { getObject } = await import("../webComponents/v6/core/controls/table/v22/renderPipeline/tasks/tableTask/footer/v3/summaryRow/index.js");
+                const { buildFooterRowSpec } = await import("../webComponents/v6/core/controls/table/v22/renderPipeline/tasks/tableTask/footer/v3/buildFooterRowSpec.js");
 
                 const columns = ["StockItemName", "StockParentName", "Rate"];
                 const data = [
@@ -271,12 +272,12 @@ describe("ks-table-builder-from-json Unit Test Suite", () => {
                     Rate: "200"
                 });
 
-                // Phase 2 test: getRow builds spec from data object
+                // Phase 2 test: buildFooterRowSpec builds spec from data object
                 const trSpec = { tagName: "tr", children: [] };
                 const thSpec = { tagName: "th", textContent: "" };
 
-                const rowSpec = getRow({
-                    inSummaryDataObject: summaryObj,
+                const rowSpec = buildFooterRowSpec({
+                    inDataObject: summaryObj,
                     inColumns: columns,
                     inTrSpec: trSpec,
                     inThSpec: thSpec
@@ -285,6 +286,7 @@ describe("ks-table-builder-from-json Unit Test Suite", () => {
                 assert.equal(rowSpec.children.length, 3);
                 assert.equal(rowSpec.children[0].textContent, "2");
                 assert.equal(rowSpec.children[2].textContent, "200");
+
 
                 // Orchestrator test: buildFooter
                 const footerRows = buildFooter({
