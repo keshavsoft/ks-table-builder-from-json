@@ -1,7 +1,7 @@
 {
   "tagName": "table",
   "attributes": {
-    "class": "w-full border-collapse border border-gray-300 shadow-sm rounded-lg overflow-hidden bg-white"
+    "class": "tableSpec"
   },
   "children": [
     {

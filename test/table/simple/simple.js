@@ -28,7 +28,7 @@ if (tableContainer) {
 
     // Table Render (v9 Single-Call orchestrator pattern with responsibility-grouped options)
     const tableElement = renderTable({
-        inTheme: { inTheme: "dark" },
+        theme: "medium",
         inTable: { inRows: stockRows },
         inEvents: { inOnRowClick: handleRowClick },
         inVisibility: {

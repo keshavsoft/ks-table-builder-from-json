@@ -1,7 +1,7 @@
 {
   "tagName": "div",
   "attributes": {
-    "class": "table-toolbar flex justify-between items-center bg-white p-3 rounded-lg border border-gray-200 shadow-sm"
+    "class": "searchSpec"
   },
   "children": [
     {
