@@ -1,4 +1,4 @@
-import { renderTable } from "../../../../webComponents/v6/core/controls/table/v21/index.js";
+import { renderTable } from "../../../../webComponents/v6/core/controls/table/v22/index.js";
 
 const tableContainer = document.getElementById("tableContainer");
 const selectionBadge = document.getElementById("selectionBadge");
@@ -28,7 +28,7 @@ if (tableContainer) {
 
     // Table Render (v9 Single-Call orchestrator pattern with responsibility-grouped options)
     const tableElement = renderTable({
-        theme: "medium",
+        theme: "dark",
         inTable: { inRows: stockRows },
         inEvents: { inOnRowClick: handleRowClick },
         data: stockRows,
@@ -38,7 +38,10 @@ if (tableContainer) {
         },
         renderers: {
             table: {
-                columns: ["#", "StockItemName", "StockParentName"]
+                columns: ["StockItemName", "StockParentName"],
+                footer: {
+
+                }
             }
         }
     });
