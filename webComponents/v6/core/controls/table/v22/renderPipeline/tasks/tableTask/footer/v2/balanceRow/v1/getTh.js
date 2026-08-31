@@ -1,17 +1,15 @@
-import calculateAggregate from "./aggregateFunctions.js";
+import evaluateBalance from "./evaluateBalance.js";
 
 /**
  * Helper: Generates individual <th> balance cell spec for a column
  */
-export const getTh = ({ inColumnKey, inFuncType, inData, inThSpec, inSummaryRowObject }) => {
+export const getTh = ({ inColumnKey, inFuncType, inThSpec, inSummaryRowObject }) => {
     const localColumnKey = inColumnKey;
     const localFuncType = inFuncType;
-    const localData = inData || [];
     const localThSpec = inThSpec;
     const localSummaryRowObject = inSummaryRowObject || {};
 
-    const cellText = calculateAggregate({
-        inData: localData,
+    const cellText = evaluateBalance({
         inColumnKey: localColumnKey,
         inFuncType: localFuncType,
         inSummaryRowObject: localSummaryRowObject
@@ -24,4 +22,3 @@ export const getTh = ({ inColumnKey, inFuncType, inData, inThSpec, inSummaryRowO
 };
 
 export default getTh;
-

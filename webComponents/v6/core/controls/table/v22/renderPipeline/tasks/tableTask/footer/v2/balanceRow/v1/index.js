@@ -3,11 +3,11 @@ import getRow from "./getRow.js";
 
 /**
  * Balance Row Module (v1): Self-contained balance row calculator
+ * Purely relies on inSummaryRowObject and never takes dataset (inData).
  */
-export const getBalanceRow = ({ inBalanceConfig, inColumns, inData, inTrSpec, inThSpec, inSummaryRowObject }) => {
+export const getBalanceRow = ({ inBalanceConfig, inColumns, inTrSpec, inThSpec, inSummaryRowObject }) => {
     const localBalanceConfig = inBalanceConfig;
     const localColumns = inColumns || [];
-    const localData = inData || [];
     const localTrSpec = inTrSpec;
     const localThSpec = inThSpec;
     const localSummaryRowObject = inSummaryRowObject || {};
@@ -19,7 +19,6 @@ export const getBalanceRow = ({ inBalanceConfig, inColumns, inData, inTrSpec, in
     const balanceDataObject = getObject({
         inBalanceConfig: localBalanceConfig,
         inColumns: localColumns,
-        inData: localData,
         inSummaryRowObject: localSummaryRowObject
     });
 
@@ -30,7 +29,6 @@ export const getBalanceRow = ({ inBalanceConfig, inColumns, inData, inTrSpec, in
     return getRow({
         inConfig: localBalanceConfig,
         inColumns: localColumns,
-        inData: localData,
         inTrSpec: localTrSpec,
         inThSpec: localThSpec,
         inSummaryRowObject: localSummaryRowObject

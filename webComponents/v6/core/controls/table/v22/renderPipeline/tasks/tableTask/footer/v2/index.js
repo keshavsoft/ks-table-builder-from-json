@@ -48,12 +48,11 @@ export const buildFooter = ({
         }
     }
 
-    // 2. Process balanceRow configuration
+    // 2. Process balanceRow configuration (Purely depends on summaryRowObject, no inData)
     if (localFooterConfig.balanceRow && typeof localFooterConfig.balanceRow === "object") {
         const balanceDataObject = getBalanceObject({
             inBalanceConfig: localFooterConfig.balanceRow,
             inColumns: localColumns,
-            inData: localData,
             inSummaryRowObject: summaryRowObject
         });
 

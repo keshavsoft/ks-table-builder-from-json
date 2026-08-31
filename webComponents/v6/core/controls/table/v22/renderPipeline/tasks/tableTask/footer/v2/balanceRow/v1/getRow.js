@@ -3,10 +3,9 @@ import getTh from "./getTh.js";
 /**
  * Helper: Generates balance <tr> row spec containing <th> cell specs for all columns
  */
-export const getRow = ({ inConfig, inColumns, inData, inTrSpec, inThSpec, inSummaryRowObject }) => {
+export const getRow = ({ inConfig, inColumns, inTrSpec, inThSpec, inSummaryRowObject }) => {
     const localConfig = inConfig || {};
     const localColumns = inColumns || [];
-    const localData = inData || [];
     const localTrSpec = inTrSpec;
     const localThSpec = inThSpec;
     const localSummaryRowObject = inSummaryRowObject || {};
@@ -22,7 +21,6 @@ export const getRow = ({ inConfig, inColumns, inData, inTrSpec, inThSpec, inSumm
         return getTh({
             inColumnKey: keyName,
             inFuncType: funcType,
-            inData: localData,
             inThSpec: localThSpec,
             inSummaryRowObject: localSummaryRowObject
         });
@@ -32,4 +30,3 @@ export const getRow = ({ inConfig, inColumns, inData, inTrSpec, inThSpec, inSumm
 };
 
 export default getRow;
-

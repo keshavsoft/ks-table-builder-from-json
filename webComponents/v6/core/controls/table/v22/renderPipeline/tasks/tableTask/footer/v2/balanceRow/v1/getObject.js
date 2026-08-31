@@ -1,13 +1,13 @@
-import calculateAggregate from "./aggregateFunctions.js";
+import evaluateBalance from "./evaluateBalance.js";
 
 /**
- * Step 1: Generates key-value data object of balance values for each column
+ * Step 1: Generates key-value data object of balance values for each column.
+ * Purely relies on inSummaryRowObject and never accepts dataset (inData).
  * Output format: { [columnKey]: "value", ... }
  */
-export const getObject = ({ inBalanceConfig, inColumns, inData, inSummaryRowObject }) => {
+export const getObject = ({ inBalanceConfig, inColumns, inSummaryRowObject }) => {
     const localBalanceConfig = inBalanceConfig || {};
     const localColumns = inColumns || [];
-    const localData = inData || [];
     const localSummaryRowObject = inSummaryRowObject || {};
 
     const balanceDataObject = {};
@@ -19,8 +19,7 @@ export const getObject = ({ inBalanceConfig, inColumns, inData, inSummaryRowObje
 
         const funcType = localBalanceConfig[keyName];
 
-        balanceDataObject[keyName] = calculateAggregate({
-            inData: localData,
+        balanceDataObject[keyName] = evaluateBalance({
             inColumnKey: keyName,
             inFuncType: funcType,
             inSummaryRowObject: localSummaryRowObject

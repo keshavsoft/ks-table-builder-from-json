@@ -290,7 +290,7 @@ describe("ks-table-builder-from-json Unit Test Suite", () => {
                     inHasFooterConfig: true,
                     inFooterConfig: {
                         summaryRow: summaryConfig,
-                        balanceRow: summaryConfig
+                        balanceRow: { StockItemName: "StockItemName" }
                     },
                     inColumns: columns,
                     inData: data,
@@ -317,7 +317,7 @@ describe("ks-table-builder-from-json Unit Test Suite", () => {
                     Debit: "sum"
                 };
                 const balanceConfig = {
-                    StockItemName: "count",
+                    StockItemName: "StockItemName",
                     Credit: "Credit-Debit",
                     Debit: "Debit-Credit"
                 };
@@ -346,6 +346,7 @@ describe("ks-table-builder-from-json Unit Test Suite", () => {
                 assert.equal(footerRows[1].children[2].textContent, "-550");
             });
         });
+
 
     });
 });

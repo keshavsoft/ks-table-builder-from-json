@@ -1,13 +1,14 @@
 /**
- * Helper: Evaluates formula expression (e.g. "Credit-Debit", "Credit - Debit") or key lookup on summaryRowObject ONLY.
- * Balance row NEVER uses dataset aggregate functions.
+ * Helper: Evaluates balance row expressions (e.g. "Credit-Debit", "Debit-Credit", "StockItemName")
+ * purely using values from inSummaryRowObject.
+ * Note: Balance row never accepts or operates on raw dataset (inData).
  */
-const evaluateFormula = ({ inFormula, inSummaryRowObject, inColumnKey }) => {
-    const localFormula = inFormula;
-    const localSummaryRowObject = inSummaryRowObject || {};
+export const evaluateBalance = ({ inColumnKey, inFuncType, inSummaryRowObject }) => {
     const localColumnKey = inColumnKey;
+    const localFuncType = typeof inFuncType === "string" ? inFuncType.trim() : String(inFuncType || "");
+    const localSummaryRowObject = inSummaryRowObject || {};
 
-    if (!localFormula) {
+    if (!localFuncType) {
         return localSummaryRowObject[localColumnKey] !== undefined
             ? String(localSummaryRowObject[localColumnKey])
             : "";
@@ -16,8 +17,8 @@ const evaluateFormula = ({ inFormula, inSummaryRowObject, inColumnKey }) => {
     // 1. Check for binary arithmetic operators (-, +, *, /)
     const operators = ["-", "+", "*", "/"];
     for (const op of operators) {
-        if (localFormula.includes(op)) {
-            const parts = localFormula.split(op).map(p => p.trim());
+        if (localFuncType.includes(op)) {
+            const parts = localFuncType.split(op).map(p => p.trim());
             if (parts.length === 2) {
                 const [leftKey, rightKey] = parts;
                 const hasLeft = localSummaryRowObject[leftKey] !== undefined;
@@ -41,9 +42,9 @@ const evaluateFormula = ({ inFormula, inSummaryRowObject, inColumnKey }) => {
         }
     }
 
-    // 2. Direct key lookup in localSummaryRowObject
-    if (localSummaryRowObject[localFormula] !== undefined) {
-        return String(localSummaryRowObject[localFormula]);
+    // 2. Direct key lookup in localSummaryRowObject (e.g. inFuncType = "StockItemName" or "Credit")
+    if (localSummaryRowObject[localFuncType] !== undefined) {
+        return String(localSummaryRowObject[localFuncType]);
     }
 
     // 3. Fallback: check if localSummaryRowObject has value for current column key
@@ -51,23 +52,7 @@ const evaluateFormula = ({ inFormula, inSummaryRowObject, inColumnKey }) => {
         return String(localSummaryRowObject[localColumnKey]);
     }
 
-    return String(inFormula);
+    return String(inFuncType);
 };
 
-/**
- * Utility: Evaluates balance row values purely using summaryRowObject.
- * NEVER calculates dataset aggregates.
- */
-export const calculateAggregate = ({ inData, inColumnKey, inFuncType, inSummaryRowObject }) => {
-    const localColumnKey = inColumnKey;
-    const rawFuncType = typeof inFuncType === "string" ? inFuncType.trim() : String(inFuncType || "");
-    const localSummaryRowObject = inSummaryRowObject || {};
-
-    return evaluateFormula({
-        inFormula: rawFuncType,
-        inSummaryRowObject: localSummaryRowObject,
-        inColumnKey: localColumnKey
-    });
-};
-
-export default calculateAggregate;
+export default evaluateBalance;
