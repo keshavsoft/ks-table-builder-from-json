@@ -1,18 +1,20 @@
 import calculateAggregate from "./aggregateFunctions.js";
 
 /**
- * Helper: Generates individual <th> summary cell spec for a column
+ * Helper: Generates individual <th> balance cell spec for a column
  */
-export const getTh = ({ inColumnKey, inFuncType, inData, inThSpec }) => {
+export const getTh = ({ inColumnKey, inFuncType, inData, inThSpec, inSummaryRowObject }) => {
     const localColumnKey = inColumnKey;
     const localFuncType = inFuncType;
     const localData = inData || [];
     const localThSpec = inThSpec;
+    const localSummaryRowObject = inSummaryRowObject || {};
 
     const cellText = calculateAggregate({
         inData: localData,
         inColumnKey: localColumnKey,
-        inFuncType: localFuncType
+        inFuncType: localFuncType,
+        inSummaryRowObject: localSummaryRowObject
     });
 
     const thNode = JSON.parse(JSON.stringify(localThSpec));
@@ -22,3 +24,4 @@ export const getTh = ({ inColumnKey, inFuncType, inData, inThSpec }) => {
 };
 
 export default getTh;
+

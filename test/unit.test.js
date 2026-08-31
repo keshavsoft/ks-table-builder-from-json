@@ -302,7 +302,51 @@ describe("ks-table-builder-from-json Unit Test Suite", () => {
                 assert.equal(footerRows[0].children[0].textContent, "2");
                 assert.equal(footerRows[0].children[2].textContent, "200");
             });
+
+            test("should evaluate balance row formulas like Credit-Debit using summaryRowObject", async () => {
+                const { buildFooter } = await import("../webComponents/v6/core/controls/table/v22/renderPipeline/tasks/tableTask/footer/v2/index.js");
+
+                const columns = ["StockItemName", "Credit", "Debit"];
+                const data = [
+                    { StockItemName: "Item 1", Credit: 500, Debit: 250 },
+                    { StockItemName: "Item 2", Credit: 450, Debit: 150 }
+                ];
+                const summaryConfig = {
+                    StockItemName: "count",
+                    Credit: "sum",
+                    Debit: "sum"
+                };
+                const balanceConfig = {
+                    StockItemName: "count",
+                    Credit: "Credit-Debit",
+                    Debit: "Debit-Credit"
+                };
+
+                const trSpec = { tagName: "tr", children: [] };
+                const thSpec = { tagName: "th", textContent: "" };
+
+                const footerRows = buildFooter({
+                    inHasFooterConfig: true,
+                    inFooterConfig: {
+                        summaryRow: summaryConfig,
+                        balanceRow: balanceConfig
+                    },
+                    inColumns: columns,
+                    inData: data,
+                    inTrSpec: trSpec,
+                    inThSpec: thSpec
+                });
+
+                assert.equal(footerRows.length, 2);
+                // Summary row: Credit = 950, Debit = 400
+                assert.equal(footerRows[0].children[1].textContent, "950");
+                assert.equal(footerRows[0].children[2].textContent, "400");
+                // Balance row: Credit = 950 - 400 = 550, Debit = 400 - 950 = -550
+                assert.equal(footerRows[1].children[1].textContent, "550");
+                assert.equal(footerRows[1].children[2].textContent, "-550");
+            });
         });
+
     });
 });
 

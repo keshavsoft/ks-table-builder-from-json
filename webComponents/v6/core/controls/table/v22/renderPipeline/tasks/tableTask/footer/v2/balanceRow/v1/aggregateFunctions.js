@@ -1,20 +1,83 @@
 /**
- * Utility: Evaluates aggregate functions (count, sum, avg/mean, min, max) on dataset for a column
+ * Helper: Evaluates formula expression (e.g. "Credit-Debit", "Credit - Debit") on summaryRowObject
  */
-export const calculateAggregate = ({ inData, inColumnKey, inFuncType }) => {
+const evaluateFormula = ({ inFormula, inSummaryRowObject }) => {
+    const localFormula = inFormula;
+    const localSummaryRowObject = inSummaryRowObject || {};
+
+    if (!localFormula) return null;
+
+    // 1. Check for binary operators (-, +, *, /)
+    const operators = ["-", "+", "*", "/"];
+    for (const op of operators) {
+        if (localFormula.includes(op)) {
+            const parts = localFormula.split(op).map(p => p.trim());
+            if (parts.length === 2) {
+                const [leftKey, rightKey] = parts;
+                const hasLeft = localSummaryRowObject[leftKey] !== undefined;
+                const hasRight = localSummaryRowObject[rightKey] !== undefined;
+
+                if (hasLeft || hasRight || !isNaN(Number(leftKey)) || !isNaN(Number(rightKey))) {
+                    const leftVal = hasLeft ? Number(localSummaryRowObject[leftKey]) : Number(leftKey);
+                    const rightVal = hasRight ? Number(localSummaryRowObject[rightKey]) : Number(rightKey);
+
+                    if (!isNaN(leftVal) && !isNaN(rightVal)) {
+                        let res = 0;
+                        if (op === "-") res = leftVal - rightVal;
+                        else if (op === "+") res = leftVal + rightVal;
+                        else if (op === "*") res = leftVal * rightVal;
+                        else if (op === "/") res = rightVal !== 0 ? leftVal / rightVal : 0;
+
+                        return String(res);
+                    }
+                }
+            }
+        }
+    }
+
+    // 2. Direct key match in localSummaryRowObject
+    if (localSummaryRowObject[localFormula] !== undefined) {
+        return String(localSummaryRowObject[localFormula]);
+    }
+
+    return null;
+};
+
+/**
+ * Utility: Evaluates balance row values either via summaryRowObject formula evaluation or dataset aggregate
+ */
+export const calculateAggregate = ({ inData, inColumnKey, inFuncType, inSummaryRowObject }) => {
     const localData = inData || [];
     const localColumnKey = inColumnKey;
-    const localFuncType = typeof inFuncType === "string" ? inFuncType.toLowerCase().trim() : "";
+    const rawFuncType = typeof inFuncType === "string" ? inFuncType.trim() : String(inFuncType || "");
+    const localSummaryRowObject = inSummaryRowObject || {};
 
-    if (!localFuncType) {
+    if (!rawFuncType) {
         return typeof inFuncType === "number" || typeof inFuncType === "string" ? String(inFuncType) : "";
     }
+
+    // First: Evaluate formula against summaryRowObject if available
+    const formulaResult = evaluateFormula({
+        inFormula: rawFuncType,
+        inSummaryRowObject: localSummaryRowObject
+    });
+
+    if (formulaResult !== null) {
+        return formulaResult;
+    }
+
+    // Second: Fallback if localSummaryRowObject already has direct column value
+    if (localSummaryRowObject[localColumnKey] !== undefined && (rawFuncType.toLowerCase() === "count" || rawFuncType.toLowerCase() === "sum" || rawFuncType.toLowerCase() === "min" || rawFuncType.toLowerCase() === "max" || rawFuncType.toLowerCase() === "avg")) {
+        return String(localSummaryRowObject[localColumnKey]);
+    }
+
+    // Third: Fallback to dataset aggregate calculation
+    const localFuncType = rawFuncType.toLowerCase();
 
     if (localFuncType === "count") {
         return String(localData.length);
     }
 
-    // Extract valid numeric values for column
     const numericValues = localData
         .map(row => Number(row[localColumnKey]))
         .filter(val => !isNaN(val));

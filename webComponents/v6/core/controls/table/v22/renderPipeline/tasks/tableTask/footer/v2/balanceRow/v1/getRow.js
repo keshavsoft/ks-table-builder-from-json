@@ -1,14 +1,15 @@
 import getTh from "./getTh.js";
 
 /**
- * Helper: Generates summary <tr> row spec containing <th> cell specs for all columns
+ * Helper: Generates balance <tr> row spec containing <th> cell specs for all columns
  */
-export const getRow = ({ inConfig, inColumns, inData, inTrSpec, inThSpec }) => {
+export const getRow = ({ inConfig, inColumns, inData, inTrSpec, inThSpec, inSummaryRowObject }) => {
     const localConfig = inConfig || {};
     const localColumns = inColumns || [];
     const localData = inData || [];
     const localTrSpec = inTrSpec;
     const localThSpec = inThSpec;
+    const localSummaryRowObject = inSummaryRowObject || {};
 
     const trNode = JSON.parse(JSON.stringify(localTrSpec));
     trNode.children = localColumns.map(columnKey => {
@@ -22,7 +23,8 @@ export const getRow = ({ inConfig, inColumns, inData, inTrSpec, inThSpec }) => {
             inColumnKey: keyName,
             inFuncType: funcType,
             inData: localData,
-            inThSpec: localThSpec
+            inThSpec: localThSpec,
+            inSummaryRowObject: localSummaryRowObject
         });
     });
 
@@ -30,3 +32,4 @@ export const getRow = ({ inConfig, inColumns, inData, inTrSpec, inThSpec }) => {
 };
 
 export default getRow;
+
