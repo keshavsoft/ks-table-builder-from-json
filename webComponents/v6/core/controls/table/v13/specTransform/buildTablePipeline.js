@@ -20,7 +20,7 @@ export const buildTablePipeline = ({
     // Task 1: Theme Transformer
     if (inThemeSpec) {
         pipeline.push(createApplyThemeTask({ inThemeSpec }));
-    }
+    };
 
     // Task 2: Header Visibility Transformer (<thead />)
     pipeline.push(createHeaderTask({ inShowHeader }));

@@ -7,7 +7,8 @@ import { runRenderPipeline, buildRenderPipeline } from "./renderPipeline/index.j
 import resolveTableOptions from "./options/resolveTableOptions.js";
 import createSearchHandler from "./events/createSearchHandler.js";
 import domCreationFuncs from "../../../../domCreation/index.js";
-console.log("table-6-13");
+
+// console.log("table-6-13");
 
 /**
  * Table 3-Layer Skeleton Architecture Orchestrator
