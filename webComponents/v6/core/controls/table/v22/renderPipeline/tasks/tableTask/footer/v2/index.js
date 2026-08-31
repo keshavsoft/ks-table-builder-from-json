@@ -1,11 +1,20 @@
-import buildFooterRowSpec from "./buildFooterRowSpec.js";
+import buildSummaryRow from "./summaryRow/v2/index.js";
 
 /**
- * Footer Module: Pure function returning <tfoot> <tr> row specs array or null
+ * Footer Module (v2): Pure function returning <tfoot> <tr> row specs array or null
  */
-export const buildFooter = ({ inFooterConfig, inHasFooterConfig, inTrSpec, inThSpec }) => {
+export const buildFooter = ({
+    inFooterConfig,
+    inHasFooterConfig,
+    inColumns,
+    inData,
+    inTrSpec,
+    inThSpec
+}) => {
     const localFooterConfig = inFooterConfig;
     const localHasFooterConfig = inHasFooterConfig;
+    const localColumns = inColumns || [];
+    const localData = inData || [];
     const localTrSpec = inTrSpec;
     const localThSpec = inThSpec;
 
@@ -13,21 +22,23 @@ export const buildFooter = ({ inFooterConfig, inHasFooterConfig, inTrSpec, inThS
         return null;
     }
 
-    const footerCells = Array.isArray(localFooterConfig)
-        ? localFooterConfig
-        : (localFooterConfig?.cells || localFooterConfig?.rows || null);
+    const footerRows = [];
 
-    if (Array.isArray(footerCells) && footerCells.length > 0 && localTrSpec && localThSpec) {
-        const footerRow = buildFooterRowSpec({
-            inFooterCells: footerCells,
+    // 1. Handle summaryRow configuration via self-contained summaryRow/v1 module
+    if (localFooterConfig?.summaryRow && typeof localFooterConfig.summaryRow === "object") {
+        const summaryRowSpec = buildSummaryRow({
+            inSummaryConfig: localFooterConfig.summaryRow,
+            inColumns: localColumns,
+            inData: localData,
             inTrSpec: localTrSpec,
             inThSpec: localThSpec
         });
-
-        return [footerRow];
+        if (summaryRowSpec) {
+            footerRows.push(summaryRowSpec);
+        }
     }
 
-    return [];
+    return footerRows;
 };
 
 export default buildFooter;

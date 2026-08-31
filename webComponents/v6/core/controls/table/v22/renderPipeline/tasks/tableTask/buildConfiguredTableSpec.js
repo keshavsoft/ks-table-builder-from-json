@@ -44,6 +44,8 @@ export const buildConfiguredTableSpec = ({
     const footerRows = buildFooter({
         inHasFooterConfig: localHasFooterConfig,
         inFooterConfig: localFooterConfig,
+        inColumns: localColumns,
+        inData: localData,
         inTrSpec: localDomTreeSpecs.trSpec,
         inThSpec: localDomTreeSpecs.thSpec
     });
