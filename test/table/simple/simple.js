@@ -1,4 +1,4 @@
-import { renderTable } from "../../../../webComponents/v6/core/controls/table/v20/index.js";
+import { renderTable } from "../../../../webComponents/v6/core/controls/table/v21/index.js";
 
 const tableContainer = document.getElementById("tableContainer");
 const selectionBadge = document.getElementById("selectionBadge");
@@ -31,9 +31,15 @@ if (tableContainer) {
         theme: "medium",
         inTable: { inRows: stockRows },
         inEvents: { inOnRowClick: handleRowClick },
+        data: stockRows,
         inVisibility: {
             showSearch: true,
             showTable: true
+        },
+        renderers: {
+            table: {
+                columns: ["#", "StockItemName", "StockParentName"]
+            }
         }
     });
 
