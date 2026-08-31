@@ -42,17 +42,14 @@ if (tableContainer) {
                 footer: {
                     summaryRow: {
                         StockItemName: "count",
-                        StockParentName1: "max",
                         Credit: "sum",
                         Debit: "sum"
                     },
                     balanceRow: {
-                        StockItemName: "StockItemName",
-                        StockParentName: "StockParentName",
+                        StockItemName: "111",
                         Credit: "Credit-Debit",
                         Debit: "Debit-Credit"
                     }
-
                 }
             }
         }

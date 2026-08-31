@@ -243,7 +243,8 @@ describe("ks-table-builder-from-json Unit Test Suite", () => {
         describe("9. Footer v2 & summaryRow/v3 (Two-Phase Architecture)", () => {
 
             test("should calculate summary row data object in Phase 1 and build row spec in Phase 2", async () => {
-                const { buildFooter } = await import("../webComponents/v6/core/controls/table/v22/renderPipeline/tasks/tableTask/footer/v2/index.js");
+                const { buildFooter } = await import("../webComponents/v6/core/controls/table/v22/renderPipeline/tasks/tableTask/footer/v3/index.js");
+
                 const { getObject, getRow } = await import("../webComponents/v6/core/controls/table/v22/renderPipeline/tasks/tableTask/footer/v2/summaryRow/v3/index.js");
 
                 const columns = ["StockItemName", "StockParentName", "Rate"];
@@ -304,7 +305,8 @@ describe("ks-table-builder-from-json Unit Test Suite", () => {
             });
 
             test("should evaluate balance row formulas like Credit-Debit using summaryRowObject", async () => {
-                const { buildFooter } = await import("../webComponents/v6/core/controls/table/v22/renderPipeline/tasks/tableTask/footer/v2/index.js");
+                const { buildFooter } = await import("../webComponents/v6/core/controls/table/v22/renderPipeline/tasks/tableTask/footer/v3/index.js");
+
 
                 const columns = ["StockItemName", "Credit", "Debit"];
                 const data = [

@@ -1,6 +1,7 @@
 import buildHead from "./head/index.js";
 import buildBody from "./body/index.js";
-import buildFooter from "./footer/v2/index.js";
+import buildFooter from "./footer/v3/index.js";
+
 
 /**
  * Main Orchestrator: Purely resolves row specs from head, body, and footer modules
