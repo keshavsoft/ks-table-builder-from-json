@@ -1,11 +1,10 @@
-import { getObject as getSummaryObject } from "./summaryRow/index.js";
-import { getObject as getBalanceObject } from "./balanceRow/index.js";
+import collectFooterDataObjects from "./collectFooterDataObjects.js";
 import buildFooterRowSpec from "./buildFooterRowSpec.js";
 
 /**
- * Footer Module (v3): Fully self-contained Two-step Pipeline
- * Step 1: Arrive at ALL footer row data objects first (summaryRowObject, balanceRowObject, etc.)
- * Step 2: Loop through data objects array and render each on-the-fly into <tr> row specs
+ * Footer Module (v3): Pure Orchestrator
+ * Step 1: Collects all footer row data objects via collectFooterDataObjects helper
+ * Step 2: Maps each data object to a <tr> DOM row spec on the fly via buildFooterRowSpec
  */
 export const buildFooter = ({
     inFooterConfig,
@@ -26,45 +25,22 @@ export const buildFooter = ({
         return null;
     }
 
-    // STEP 1: Arrive at ALL footer row data objects first
-    const footerDataObjects = [];
+    // 1. Data Object Pipeline
+    const footerDataObjects = collectFooterDataObjects({
+        inFooterConfig: localFooterConfig,
+        inColumns: localColumns,
+        inData: localData
+    });
 
-    // 1a. Calculate summaryRow data object
-    if (localFooterConfig.summaryRow && typeof localFooterConfig.summaryRow === "object") {
-        const summaryRowObject = getSummaryObject({
-            inSummaryConfig: localFooterConfig.summaryRow,
-            inColumns: localColumns,
-            inData: localData
-        });
-        if (summaryRowObject) {
-            footerDataObjects.push(summaryRowObject);
-        }
-    }
-
-    // 1b. Calculate balanceRow data object (relies purely on summaryRow data object)
-    if (localFooterConfig.balanceRow && typeof localFooterConfig.balanceRow === "object") {
-        const summaryRowObject = footerDataObjects[0] || {};
-        const balanceRowObject = getBalanceObject({
-            inBalanceConfig: localFooterConfig.balanceRow,
-            inColumns: localColumns,
-            inSummaryRowObject: summaryRowObject
-        });
-        if (balanceRowObject) {
-            footerDataObjects.push(balanceRowObject);
-        }
-    }
-
-    // STEP 2: Loop through footer data objects array and render row specs on the fly
-    const footerRows = footerDataObjects.map(dataObj => {
-        return buildFooterRowSpec({
+    // 2. DOM Spec Pipeline
+    return footerDataObjects.map(dataObj =>
+        buildFooterRowSpec({
             inDataObject: dataObj,
             inColumns: localColumns,
             inTrSpec: localTrSpec,
             inThSpec: localThSpec
-        });
-    }).filter(Boolean);
-
-    return footerRows;
+        })
+    ).filter(Boolean);
 };
 
 export default buildFooter;

@@ -349,7 +349,36 @@ describe("ks-table-builder-from-json Unit Test Suite", () => {
                 assert.equal(footerRows[1].children[1].textContent, "550");
                 assert.equal(footerRows[1].children[2].textContent, "-550");
             });
+
+            test("should render multiple inputsRow footer rows when inputsRow is an array of row configs", async () => {
+                const { buildFooter } = await import("../webComponents/v6/core/controls/table/v22/renderPipeline/tasks/tableTask/footer/v3/index.js");
+
+                const columns = ["StockItemName", "StockParentName", "Credit", "Debit"];
+                const data = [];
+
+                const trSpec = { tagName: "tr", children: [] };
+                const thSpec = { tagName: "th", textContent: "" };
+
+                const footerRows = buildFooter({
+                    inHasFooterConfig: true,
+                    inFooterConfig: {
+                        inputsRow: [
+                            ["StockItemName", "Credit", "Debit"],
+                            ["StockParentName", "Credit", "Debit"]
+                        ]
+                    },
+                    inColumns: columns,
+                    inData: data,
+                    inTrSpec: trSpec,
+                    inThSpec: thSpec
+                });
+
+                assert.equal(footerRows.length, 2);
+                assert.equal(footerRows[0].children.length, 4);
+                assert.equal(footerRows[1].children.length, 4);
+            });
         });
+
 
 
     });

@@ -50,8 +50,11 @@ if (tableContainer) {
                         Credit: "Credit-Debit",
                         Debit: "Debit-Credit"
                     },
-                    inputsRow: ["StockItemName", "Credit", "Debit"],
-                    inputsRow: ["StockParentName", "Credit", "Debit"]
+                    inputsRow: [
+                        ["StockItemName", "Credit", "Debit"],
+                        ["StockParentName", "Credit", "Debit"]
+                    ]
+
                 }
             }
         }
