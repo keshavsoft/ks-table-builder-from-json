@@ -8,17 +8,19 @@ export const getObject = ({ inInputsConfig, inColumns }) => {
 
     if (!localInputsConfig) {
         return null;
-    }
+    };
 
     // Helper: Build single input data object from a config item
     const buildSingleInputObject = (configItem) => {
+        console.log("localInputsConfig : ", localInputsConfig, localColumns);
         const inputObject = {};
 
         localColumns.forEach(columnKey => {
-            const keyName = typeof columnKey === "object"
+            let keyName = typeof columnKey === "object"
                 ? (columnKey.field || columnKey.name || columnKey.label)
                 : columnKey;
-
+            // console.log("keyName : ", keyName);
+            // keyName = "input"
             if (Array.isArray(configItem)) {
                 // If configItem is array of field names e.g. ["StockItemName", "Credit", "Debit"]
                 if (configItem.includes(keyName)) {

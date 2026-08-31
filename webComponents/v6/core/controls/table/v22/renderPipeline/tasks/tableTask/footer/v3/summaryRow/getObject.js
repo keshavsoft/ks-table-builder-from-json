@@ -10,6 +10,7 @@ export const getObject = ({ inSummaryConfig, inColumns, inData }) => {
     const localData = inData || [];
 
     const summaryDataObject = {};
+    // console.log("localColumns : ", localColumns);
 
     localColumns.forEach(columnKey => {
         const keyName = typeof columnKey === "object"

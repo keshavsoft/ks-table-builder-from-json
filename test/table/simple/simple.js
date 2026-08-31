@@ -1,4 +1,5 @@
 import { renderTable } from "../../../../webComponents/v6/core/controls/table/v22/index.js";
+import directJs from "../../../../webComponents/v6/core/controls/table/v22/direct.js";
 
 const tableContainer = document.getElementById("tableContainer");
 const selectionBadge = document.getElementById("selectionBadge");
@@ -28,7 +29,7 @@ if (tableContainer) {
 
     // Table Render (v9 Single-Call orchestrator pattern with responsibility-grouped options)
     const tableElement = renderTable({
-        theme: "dark",
+        theme1: "dark",
         inTable: { inRows: stockRows },
         inEvents: { inOnRowClick: handleRowClick },
         data: stockRows,
@@ -40,19 +41,18 @@ if (tableContainer) {
             table: {
                 columns: ["StockItemName", "StockParentName", "Credit", "Debit"],
                 footer: {
-                    summaryRow: {
+                    summaryRow1: {
                         StockItemName: "count",
                         Credit: "sum",
                         Debit: "sum"
                     },
-                    balanceRow: {
+                    balanceRow1: {
                         StockItemName: "111",
                         Credit: "Credit-Debit",
                         Debit: "Debit-Credit"
                     },
                     inputsRow: [
-                        ["StockItemName", "Credit", "Debit"],
-                        ["StockParentName", "Credit", "Debit"]
+                        ["StockItemName", "Credit", "Debit"]
                     ]
 
                 }
@@ -62,5 +62,8 @@ if (tableContainer) {
 
     if (tableElement) {
         tableContainer.appendChild(tableElement);
-    }
+    };
+
+    // tableContainer.appendChild(directJs());
+
 }

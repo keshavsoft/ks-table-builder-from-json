@@ -35,10 +35,12 @@ export const collectFooterDataObjects = ({ inFooterConfig, inColumns, inData }) 
         if (balanceRowObject) {
             footerDataObjects.push(balanceRowObject);
         }
-    }
+    };
+
 
     // 3. Process inputsRow (can be a single row or an array of multiple input rows)
     if (localFooterConfig.inputsRow) {
+        // console.log("aaaaaaaaaaaaaa : ", localFooterConfig);
         const inputsDataObjects = getInputsObject({
             inInputsConfig: localFooterConfig.inputsRow,
             inColumns: localColumns

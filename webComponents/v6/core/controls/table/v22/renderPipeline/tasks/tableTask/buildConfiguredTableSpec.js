@@ -48,7 +48,8 @@ export const buildConfiguredTableSpec = ({
         inColumns: localColumns,
         inData: localData,
         inTrSpec: localDomTreeSpecs.trSpec,
-        inThSpec: localDomTreeSpecs.thSpec
+        inThSpec: localDomTreeSpecs.thSpec,
+        inInputSpec: localDomTreeSpecs.inputSpec,
     });
 
     // 2. Hook row specs into tableSpec section nodes

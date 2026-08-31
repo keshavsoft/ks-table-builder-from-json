@@ -12,7 +12,7 @@ export const buildFooter = ({
     inColumns,
     inData,
     inTrSpec,
-    inThSpec
+    inThSpec, inInputSpec
 }) => {
     const localFooterConfig = inFooterConfig;
     const localHasFooterConfig = inHasFooterConfig;
@@ -20,6 +20,7 @@ export const buildFooter = ({
     const localData = inData;
     const localTrSpec = inTrSpec;
     const localThSpec = inThSpec;
+    const localInputSpec = inInputSpec;
 
     if (!localHasFooterConfig || !localFooterConfig || typeof localFooterConfig !== "object") {
         return null;
@@ -38,7 +39,7 @@ export const buildFooter = ({
             inDataObject: dataObj,
             inColumns: localColumns,
             inTrSpec: localTrSpec,
-            inThSpec: localThSpec
+            inThSpec: localThSpec, inInputSpec: localInputSpec
         })
     ).filter(Boolean);
 };

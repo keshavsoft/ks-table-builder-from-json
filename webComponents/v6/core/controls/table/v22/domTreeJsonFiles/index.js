@@ -4,6 +4,7 @@ import tableSpec from "./specs/tableSpec.json" with { type: "json" };
 import trSpec from "./specs/trSpec.json" with { type: "json" };
 import thSpec from "./specs/thSpec.json" with { type: "json" };
 import tdSpec from "./specs/tdSpec.json" with { type: "json" };
+import inputSpec from "./specs/input.json" with { type: "json" };
 
 export {
     root,
@@ -11,7 +12,8 @@ export {
     tableSpec,
     trSpec,
     thSpec,
-    tdSpec
+    tdSpec,
+    inputSpec
 };
 
 export default {
@@ -20,6 +22,7 @@ export default {
     tableSpec,
     trSpec,
     thSpec,
-    tdSpec
+    tdSpec,
+    inputSpec
 };
 

@@ -1,4 +1,5 @@
 import { runRenderPipeline } from "./renderPipeline/index.js";
+
 import resolveTableOptions from "./options/resolveTableOptions.js";
 import domCreationFuncs from "../../../../domCreation/index.js";
 import domTreeJsonFiles from "./domTreeJsonFiles/index.js";
@@ -20,7 +21,8 @@ export const renderTable = (inOptions = {}) => {
         tableSpec: applyThemeToSpec({ inSpec: domTreeJsonFiles.tableSpec, inThemeName: themeName, inThemeSpecKey: "table" }),
         trSpec: applyThemeToSpec({ inSpec: domTreeJsonFiles.trSpec, inThemeName: themeName, inThemeSpecKey: "tr" }),
         thSpec: applyThemeToSpec({ inSpec: domTreeJsonFiles.thSpec, inThemeName: themeName, inThemeSpecKey: "th" }),
-        tdSpec: applyThemeToSpec({ inSpec: domTreeJsonFiles.tdSpec, inThemeName: themeName, inThemeSpecKey: "td" })
+        tdSpec: applyThemeToSpec({ inSpec: domTreeJsonFiles.tdSpec, inThemeName: themeName, inThemeSpecKey: "td" }),
+        inputSpec: applyThemeToSpec({ inSpec: domTreeJsonFiles.inputSpec, inThemeName: themeName, inThemeSpecKey: "input" })
     };
 
     // Step 1: Resolve & normalize configuration options
@@ -37,7 +39,7 @@ export const renderTable = (inOptions = {}) => {
     const localRootSpec = activeDomTreeSpecs.root;
 
     localRootSpec.children.push(...childrenNodes);
-
+    // console.log("localRootSpec---------");
     const domElement = domCreationFuncs.versions[domCreationFuncs.maxVersion](localRootSpec);
 
     return domElement;
