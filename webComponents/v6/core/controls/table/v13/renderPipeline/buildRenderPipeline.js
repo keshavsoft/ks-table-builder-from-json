@@ -8,7 +8,8 @@ export const buildRenderPipeline = ({
     inShowSearch = true,
     inShowTable = true,
     inSkeletonOptions = {},
-    inCustomTasks = []
+    inCustomTasks = [],
+    inDomCreationFuncs
 } = {}) => {
     const localShowSearch = inShowSearch !== false;
     const localShowTable = inShowTable !== false;
@@ -23,6 +24,7 @@ export const buildRenderPipeline = ({
     // Render Task 2: Table Component Task (Creates & appends <table> element shell)
     pipeline.push(createTableTask({
         inShowTable: localShowTable,
+        inDomCreationFuncs,
         ...localSkeletonOptions
     }));
 

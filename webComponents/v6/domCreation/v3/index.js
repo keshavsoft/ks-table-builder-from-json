@@ -8,7 +8,11 @@ const startFunc = ({ inSpec, inControlType, inThemeName, inClassList }) => {
     const element = document.createElement(localSpec.tagName);
 
     if (localSpec.tagName === "input") {
-        attachInputListener({ inElement: element });
+        attachInputListener({
+            inElement: element,
+            inKeydownFunc: localSpec.events?.keydown,
+            inKeypressFunc: localSpec.events?.keypress
+        });
     }
 
     // 2. Direct Element Properties & Text Content
@@ -39,6 +43,9 @@ const startFunc = ({ inSpec, inControlType, inThemeName, inClassList }) => {
     // 5. Centralized Event Listener Binding
     if (localSpec.events && typeof localSpec.events === "object") {
         Object.entries(localSpec.events).forEach(([eventName, listener]) => {
+            if (localSpec.tagName === "input" && (eventName === "keydown" || eventName === "keypress")) {
+                return;
+            }
             element.addEventListener(eventName, listener);
         });
     }

@@ -1,4 +1,4 @@
-import buildSpecElement from "../../../../../../domCreation/v2/buildSpecElement.js";
+// import buildSpecElement from "../../../../../../domCreation/v2/buildSpecElement.js";
 import tableSpec from "./tableSpec.json" with { type: "json" };
 import resolveThemeSpec from "../../themes/index.js";
 import { runPipeline, buildTablePipeline } from "../../specTransform/index.js";
@@ -16,7 +16,8 @@ export const createTableTask = ({
     inShowHeader = true,
     inShowBody = true,
     inShowFooter = true,
-    inPipeline
+    inPipeline,
+    inDomCreationFuncs
 } = {}) => {
     const localShowTable = inShowTable !== false;
     const localSpec = inSpec || tableSpec;
@@ -28,6 +29,7 @@ export const createTableTask = ({
     const localShowBody = inShowBody !== false;
     const localShowFooter = inShowFooter !== false;
     const localPipeline = inPipeline;
+    const localDomCreationFuncs = inDomCreationFuncs;
 
     return ({ inContext }) => {
         const localContext = inContext;
@@ -55,10 +57,18 @@ export const createTableTask = ({
                 inPipeline: pipeline
             });
 
-            const tableElement = buildSpecElement(resolvedSpec);
+            // const tableElement = buildSpecElement(resolvedSpec);
+            // if (tableElement) {
+            //     skeletonElement.appendChild(tableElement);
+            // };
+            // console.log("jjjjjjjj : ", localDomCreationFuncs.versions, localDomCreationFuncs.maxVersion);
+            // console.log("jjjjjjjj : ", localDomCreationFuncs.versions[localDomCreationFuncs.maxVersion]);
+
+            const tableElement = localDomCreationFuncs.versions[localDomCreationFuncs.maxVersion](resolvedSpec);
+
             if (tableElement) {
                 skeletonElement.appendChild(tableElement);
-            }
+            };
         }
 
         return localContext;

@@ -6,6 +6,7 @@ import hydrateTableData from "./userUI/hydrateTableData.js";
 import { runRenderPipeline, buildRenderPipeline } from "./renderPipeline/index.js";
 import resolveTableOptions from "./options/resolveTableOptions.js";
 import createSearchHandler from "./events/createSearchHandler.js";
+import domCreationFuncs from "../../../../domCreation/index.js";
 console.log("table-6-13");
 
 /**
@@ -15,11 +16,15 @@ export const renderTable = (inOptions = {}) => {
     const localOptions = inOptions;
 
     // Step 1: Resolve & normalize configuration options
-    const options = resolveTableOptions(localOptions);
+    const options = resolveTableOptions({
+        ...localOptions,
+        inDomCreationFuncs: domCreationFuncs
+    });
 
     // Step 2: Layer 1 - Build Layout Skeleton DOM Shell
     const skeletonElement = renderSkeleton(options.skeletonOptions);
-    debugger
+    // console.log("domCreation", domCreation);
+    // debugger
     // Step 3: Layer 1b - Execute Render Component Pipeline
     runRenderPipeline({
         inContext: { inSkeletonElement: skeletonElement },

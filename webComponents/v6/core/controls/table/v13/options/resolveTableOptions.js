@@ -26,6 +26,7 @@ export const resolveTableOptions = ({
     inShowBody,
     inShowFooter,
     inRenderPipeline,
+    inDomCreationFuncs,
     ...restFlatOptions
 } = {}) => {
     // 1. Resolve Table / Data Config
@@ -79,7 +80,8 @@ export const resolveTableOptions = ({
         ? rawRenderPipeline
         : buildRenderPipeline({
             inShowSearch: showSearch,
-            inSkeletonOptions: skeletonOptions
+            inSkeletonOptions: skeletonOptions,
+            inDomCreationFuncs
         });
 
     return {
