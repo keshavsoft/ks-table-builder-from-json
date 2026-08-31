@@ -81,7 +81,7 @@ registerComponent({
 registerComponent({
     inComponentClass: KsTableBase,
     inTagName: "ks-table-base",
-    inVersion: "v6",
+    inVersion: "v6-table12",
     inNamespaceKey: "composite"
 });
 

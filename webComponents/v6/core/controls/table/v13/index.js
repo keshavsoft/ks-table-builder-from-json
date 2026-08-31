@@ -6,7 +6,7 @@ import hydrateTableData from "./userUI/hydrateTableData.js";
 import { runRenderPipeline, buildRenderPipeline } from "./renderPipeline/index.js";
 import resolveTableOptions from "./options/resolveTableOptions.js";
 import createSearchHandler from "./events/createSearchHandler.js";
-// console.log("table-6-12");
+console.log("table-6-13");
 
 /**
  * Table 3-Layer Skeleton Architecture Orchestrator
