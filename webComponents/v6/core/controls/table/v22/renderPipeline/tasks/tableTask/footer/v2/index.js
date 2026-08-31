@@ -1,4 +1,4 @@
-import getSummaryRow from "./summaryRow/v2/index.js";
+import getSummaryRow, { getObject as getSummaryObject } from "./summaryRow/v3/index.js";
 import getBalanceRow from "./balanceRow/v1/index.js";
 
 /**
@@ -14,35 +14,47 @@ export const buildFooter = ({
 }) => {
     const localFooterConfig = inFooterConfig;
     const localHasFooterConfig = inHasFooterConfig;
-
+    const localColumns = inColumns;
+    const localData = inData;
+    const localTrSpec = inTrSpec;
+    const localThSpec = inThSpec;
 
     if (!localHasFooterConfig || !localFooterConfig || typeof localFooterConfig !== "object") {
         return null;
     }
 
     const footerRows = [];
-    debugger
-    // Process summaryRow configuration via self-contained summaryRow/v2 module
+    let summaryRowObject = {};
+    debugger;
+    // Process summaryRow configuration via v3 module (Two-phase data-object architecture)
     if (localFooterConfig.summaryRow && typeof localFooterConfig.summaryRow === "object") {
+        summaryRowObject = getSummaryObject({
+            inSummaryConfig: localFooterConfig.summaryRow,
+            inColumns: localColumns,
+            inData: localData
+        });
+
         const summaryRowSpec = getSummaryRow({
             inSummaryConfig: localFooterConfig.summaryRow,
-            inColumns,
-            inData,
-            inTrSpec,
-            inThSpec
+            inColumns: localColumns,
+            inData: localData,
+            inTrSpec: localTrSpec,
+            inThSpec: localThSpec
         });
+
         if (summaryRowSpec) {
             footerRows.push(summaryRowSpec);
         }
-    }
+    };
 
     if (localFooterConfig.balanceRow && typeof localFooterConfig.balanceRow === "object") {
         const balanceRowSpec = getBalanceRow({
             inBalanceConfig: localFooterConfig.balanceRow,
-            inColumns,
-            inData,
-            inTrSpec,
-            inThSpec
+            inColumns: localColumns,
+            inData: localData,
+            inTrSpec: localTrSpec,
+            inThSpec: localThSpec,
+            inSummaryRowObject: summaryRowObject
         });
         if (balanceRowSpec) {
             footerRows.push(balanceRowSpec);
@@ -53,3 +65,4 @@ export const buildFooter = ({
 };
 
 export default buildFooter;
+

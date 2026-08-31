@@ -6,13 +6,13 @@ const selectionBadge = document.getElementById("selectionBadge");
 if (tableContainer) {
     // Raw stock items data (No serialNo column provided - auto computed by Data Mapper)
     const stockRows = [
-        { StockItemName: "0.09/30mm", StockParentName: "FISH KNITTED FABRIC", Uom: "kgs", Rate: 500 },
-        { StockItemName: "0.11-25", StockParentName: "FISH KNITTED FABRIC", Uom: "kgs" },
-        { StockItemName: "0.11-30", StockParentName: "FISH KNITTED FABRIC", Uom: "kgs" },
-        { StockItemName: "0.11/32mm", StockParentName: "FISH KNITTED FABRIC", Uom: "kgs" },
-        { StockItemName: "0.11/35mm", StockParentName: "FISH KNITTED FABRIC", Uom: "kgs" },
-        { StockItemName: "0.13/32mm", StockParentName: "FISH KNITTED FABRIC", Uom: "kgs", Rate: 200 },
-        { StockItemName: "0.14/30mm", StockParentName: "COTTON FABRIC", Uom: "meters" }
+        { StockItemName: "0.09/30mm", StockParentName: "FISH KNITTED FABRIC", Uom: "kgs", Credit: 500 },
+        { StockItemName: "0.11-25", StockParentName: "FISH KNITTED FABRIC", Uom: "kgs", Debit: 250 },
+        { StockItemName: "0.11-30", StockParentName: "FISH KNITTED FABRIC", Uom: "kgs", Debit: 150 },
+        { StockItemName: "0.11/32mm", StockParentName: "FISH KNITTED FABRIC", Uom: "kgs", Debit: 350 },
+        { StockItemName: "0.11/35mm", StockParentName: "FISH KNITTED FABRIC", Uom: "kgs", Credit: 450 },
+        { StockItemName: "0.13/32mm", StockParentName: "FISH KNITTED FABRIC", Uom: "kgs", Credit: 200 },
+        { StockItemName: "0.14/30mm", StockParentName: "COTTON FABRIC", Uom: "meters", Debit: 100 }
     ];
 
     const handleRowClick = ({ inRowElement, inEvent }) => {
@@ -38,17 +38,19 @@ if (tableContainer) {
         },
         renderers: {
             table: {
-                columns: ["StockItemName", "StockParentName", "Rate"],
+                columns: ["StockItemName", "StockParentName", "Credit", "Debit"],
                 footer: {
                     summaryRow: {
                         StockItemName: "count",
                         StockParentName: "max",
-                        Rate: "min"
+                        Credit: "sum",
+                        Debit: "sum"
                     },
                     balanceRow: {
                         StockItemName: "count",
                         StockParentName: "max",
-                        Rate: "min"
+                        Credit: "Credit-Debit",
+                        Debit: "Debit-Credit"
                     }
                 }
             }

@@ -240,6 +240,70 @@ describe("ks-table-builder-from-json Unit Test Suite", () => {
             });
         });
 
+        describe("9. Footer v2 & summaryRow/v3 (Two-Phase Architecture)", () => {
+
+            test("should calculate summary row data object in Phase 1 and build row spec in Phase 2", async () => {
+                const { buildFooter } = await import("../webComponents/v6/core/controls/table/v22/renderPipeline/tasks/tableTask/footer/v2/index.js");
+                const { getObject, getRow } = await import("../webComponents/v6/core/controls/table/v22/renderPipeline/tasks/tableTask/footer/v2/summaryRow/v3/index.js");
+
+                const columns = ["StockItemName", "StockParentName", "Rate"];
+                const data = [
+                    { StockItemName: "Item 1", StockParentName: "Parent A", Rate: 500 },
+                    { StockItemName: "Item 2", StockParentName: "Parent A", Rate: 200 }
+                ];
+                const summaryConfig = {
+                    StockItemName: "count",
+                    StockParentName: "max",
+                    Rate: "min"
+                };
+
+                // Phase 1 test: getObject returns pure data object
+                const summaryObj = getObject({
+                    inSummaryConfig: summaryConfig,
+                    inColumns: columns,
+                    inData: data
+                });
+
+                assert.deepEqual(summaryObj, {
+                    StockItemName: "2",
+                    StockParentName: "0",
+                    Rate: "200"
+                });
+
+                // Phase 2 test: getRow builds spec from data object
+                const trSpec = { tagName: "tr", children: [] };
+                const thSpec = { tagName: "th", textContent: "" };
+
+                const rowSpec = getRow({
+                    inSummaryDataObject: summaryObj,
+                    inColumns: columns,
+                    inTrSpec: trSpec,
+                    inThSpec: thSpec
+                });
+
+                assert.equal(rowSpec.children.length, 3);
+                assert.equal(rowSpec.children[0].textContent, "2");
+                assert.equal(rowSpec.children[2].textContent, "200");
+
+                // Orchestrator test: buildFooter
+                const footerRows = buildFooter({
+                    inHasFooterConfig: true,
+                    inFooterConfig: {
+                        summaryRow: summaryConfig,
+                        balanceRow: summaryConfig
+                    },
+                    inColumns: columns,
+                    inData: data,
+                    inTrSpec: trSpec,
+                    inThSpec: thSpec
+                });
+
+                assert.equal(footerRows.length, 2);
+                assert.equal(footerRows[0].children[0].textContent, "2");
+                assert.equal(footerRows[0].children[2].textContent, "200");
+            });
+        });
     });
 });
+
 
