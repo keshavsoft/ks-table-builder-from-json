@@ -4,7 +4,7 @@ import domCreationFuncs from "../../../../domCreation/index.js";
 import domTreeJsonFiles from "./domTreeJsonFiles/index.js";
 import getThemeSpecs from "./domTreeJsonFiles/themes/index.js";
 
-console.log("18");
+console.log("19");
 
 /**
  * Recursively maps theme classes from themeSpec onto baseSpec tree

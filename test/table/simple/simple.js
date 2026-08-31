@@ -1,4 +1,4 @@
-import { renderTable } from "../../../../webComponents/v6/core/controls/table/v17/index.js";
+import { renderTable } from "../../../../webComponents/v6/core/controls/table/v19/index.js";
 
 const tableContainer = document.getElementById("tableContainer");
 const selectionBadge = document.getElementById("selectionBadge");
@@ -28,7 +28,7 @@ if (tableContainer) {
 
     // Table Render (v9 Single-Call orchestrator pattern with responsibility-grouped options)
     const tableElement = renderTable({
-        inTheme: { inTheme: "light" },
+        inTheme: { inTheme: "dark" },
         inTable: { inRows: stockRows },
         inEvents: { inOnRowClick: handleRowClick },
         inVisibility: {
