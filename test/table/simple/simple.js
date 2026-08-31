@@ -32,7 +32,7 @@ if (tableContainer) {
         inTable: { inRows: stockRows },
         inEvents: { inOnRowClick: handleRowClick },
         inVisibility: {
-            showSearch: false,
+            showSearch: true,
             showTable: true
         }
     });
