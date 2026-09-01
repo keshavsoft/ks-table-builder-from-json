@@ -1,26 +1,21 @@
 import buildDataCellSpec from "./buildDataCellSpec.js";
 
 /**
- * Helper: Builds single <tr> data row spec containing <td> cell specs
+ * Helper: Builds single <tr> data row spec containing <td> cell specs from pre-shaped rowData entries
  */
-export const buildDataRowSpec = ({ inRowData, inRowIndex, inColumns, inTrSpec, inTdSpec }) => {
+export const buildDataRowSpec = ({ inRowData, inRowIndex, inTrSpec, inTdSpec }) => {
     const localRowData = inRowData || {};
     const localRowIndex = inRowIndex;
-    const localColumns = inColumns || [];
     const localTrSpec = inTrSpec;
     const localTdSpec = inTdSpec;
 
     const trNode = JSON.parse(JSON.stringify(localTrSpec));
-    trNode.children = localColumns.map(columnKey => {
-        const keyName = typeof columnKey === "object"
-            ? (columnKey.field || columnKey.name || columnKey.label)
-            : columnKey;
-
+    trNode.children = Object.entries(localRowData).map(([key, value]) => {
         let cellValue;
-        if (keyName === "#" || keyName === "sNo" || keyName === "serialNo") {
+        if (key === "#" || key === "sNo" || key === "serialNo") {
             cellValue = localRowIndex + 1;
         } else {
-            cellValue = localRowData[keyName];
+            cellValue = value;
         }
 
         return buildDataCellSpec({

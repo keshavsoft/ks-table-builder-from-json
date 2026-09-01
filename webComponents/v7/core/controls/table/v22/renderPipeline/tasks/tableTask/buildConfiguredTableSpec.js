@@ -2,7 +2,6 @@ import buildHead from "./head/index.js";
 import buildBody from "./body/index.js";
 import buildFooter from "./footer/v4/index.js";
 
-
 /**
  * Main Orchestrator: Purely resolves row specs from head, body, and footer modules
  * and hooks them into tableSpec section nodes.
@@ -15,16 +14,10 @@ export const buildConfiguredTableSpec = ({
     inFooterConfig
 }) => {
     const localDomTreeSpecs = inDomTreeSpecs;
+    const localColumns = inColumns || [];
     const localData = inData || [];
     const localHasFooterConfig = inHasFooterConfig;
     const localFooterConfig = inFooterConfig;
-
-    // Auto-derive columns from first row if columns not explicitly supplied
-    let localColumns = inColumns;
-
-    if ((!Array.isArray(localColumns) || localColumns.length === 0) && localData.length > 0) {
-        localColumns = Object.keys(localData[0]);
-    };
 
     const tableSpec = JSON.parse(JSON.stringify(localDomTreeSpecs.tableSpec));
 
@@ -37,7 +30,6 @@ export const buildConfiguredTableSpec = ({
 
     const bodyRows = buildBody({
         inData: localData,
-        inColumns: localColumns,
         inTrSpec: localDomTreeSpecs.trSpec,
         inTdSpec: localDomTreeSpecs.tdSpec
     });
@@ -49,7 +41,7 @@ export const buildConfiguredTableSpec = ({
         inData: localData,
         inTrSpec: localDomTreeSpecs.trSpec,
         inThSpec: localDomTreeSpecs.thSpec,
-        inInputSpec: localDomTreeSpecs.inputSpec,
+        inInputSpec: localDomTreeSpecs.inputSpec
     });
 
     // 2. Hook row specs into tableSpec section nodes

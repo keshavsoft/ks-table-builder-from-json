@@ -3,9 +3,8 @@ import buildBodyRowsSpec from "./buildBodyRowsSpec.js";
 /**
  * Body Module: Pure function returning <tbody> <tr> row specs array
  */
-export const buildBody = ({ inData, inColumns, inTrSpec, inTdSpec }) => {
+export const buildBody = ({ inData, inTrSpec, inTdSpec }) => {
     const localData = inData || [];
-    const localColumns = inColumns || [];
     const localTrSpec = inTrSpec;
     const localTdSpec = inTdSpec;
 
@@ -15,7 +14,6 @@ export const buildBody = ({ inData, inColumns, inTrSpec, inTdSpec }) => {
 
     return buildBodyRowsSpec({
         inData: localData,
-        inColumns: localColumns,
         inTrSpec: localTrSpec,
         inTdSpec: localTdSpec
     });

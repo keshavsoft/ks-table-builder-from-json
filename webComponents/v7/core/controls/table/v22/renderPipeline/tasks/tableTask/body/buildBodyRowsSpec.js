@@ -1,11 +1,10 @@
 import buildDataRowSpec from "./buildDataRowSpec.js";
 
 /**
- * Helper: Builds array of <tr> body row specs from dataset array
+ * Helper: Builds array of <tr> body row specs from pre-shaped dataset array
  */
-export const buildBodyRowsSpec = ({ inData, inColumns, inTrSpec, inTdSpec }) => {
+export const buildBodyRowsSpec = ({ inData, inTrSpec, inTdSpec }) => {
     const localData = inData || [];
-    const localColumns = inColumns || [];
     const localTrSpec = inTrSpec;
     const localTdSpec = inTdSpec;
 
@@ -13,7 +12,6 @@ export const buildBodyRowsSpec = ({ inData, inColumns, inTrSpec, inTdSpec }) => 
         buildDataRowSpec({
             inRowData: rowData,
             inRowIndex: rowIndex,
-            inColumns: localColumns,
             inTrSpec: localTrSpec,
             inTdSpec: localTdSpec
         })
