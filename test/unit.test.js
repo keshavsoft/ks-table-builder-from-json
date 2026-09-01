@@ -378,9 +378,27 @@ describe("ks-table-builder-from-json Unit Test Suite", () => {
                 assert.equal(footerRows[1].children.length, 4);
             });
         });
+    });
 
+    describe("10. buildSpecFromElement (DOM Node to JSON Spec Compiler)", () => {
+        test("should handle null/invalid element inputs gracefully", async () => {
+            const { buildSpecFromElement } = await import("../webComponents/v6/domToJson/v1/buildSpecFromElement.js");
+            assert.equal(buildSpecFromElement(null), null);
+            assert.equal(buildSpecFromElement(undefined), null);
+        });
 
+        test("should convert DOM element to JSON spec when document is available", async () => {
+            if (typeof document === "undefined") return;
 
+            const { buildSpecFromElement } = await import("../webComponents/v6/domToJson/v1/buildSpecFromElement.js");
+            const html = '<div id="container" class="box p-4">Welcome Home</div>';
+            const spec = buildSpecFromElement({ inElement: html });
+
+            assert.equal(spec.tagName, "div");
+            assert.equal(spec.attributes.id, "container");
+            assert.equal(spec.attributes.class, "box p-4");
+            assert.equal(spec.textContent, "Welcome Home");
+        });
     });
 });
 

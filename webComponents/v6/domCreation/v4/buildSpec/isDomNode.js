@@ -1,6 +1,6 @@
 export const isDomNode = ({ inSpec }) => {
     const localSpec = inSpec;
-    return localSpec instanceof Node;
+    return typeof Node !== "undefined" && localSpec instanceof Node;
 };
 
 export default isDomNode;
