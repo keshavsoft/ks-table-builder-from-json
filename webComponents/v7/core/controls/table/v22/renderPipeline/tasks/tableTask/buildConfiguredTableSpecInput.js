@@ -1,7 +1,9 @@
 import resolveFilteredColumns from "./resolveFilteredColumns.js";
+import prepareTableData from "./prepareTableData.js";
+import resolveFooterConfig from "./resolveFooterConfig.js";
 
 /**
- * Helper: Prepares and returns the structured input object contract expected by buildConfiguredTableSpec
+ * Story Orchestrator: Prepares and returns the structured input object contract expected by buildConfiguredTableSpec
  */
 export const buildConfiguredTableSpecInput = ({
     inDomTreeSpecs,
@@ -13,25 +15,32 @@ export const buildConfiguredTableSpecInput = ({
     const localRendererConfig = inRendererConfig;
 
     const requestedKeys = localRendererConfig?.columns || [];
-    const hasFooterConfig = Boolean(localRendererConfig && ("footer" in localRendererConfig));
-    const footerConfig = localRendererConfig?.footer;
-
-    // Pull data & columnsConfig from store
-    const data = localStore?.dataStore?.getOriginalData() || [];
+    const rawData = localStore?.dataStore?.getOriginalData() || [];
     const columnsConfig = localStore?.columnsStore?.getColumnsConfig() || [];
 
-    // Resolve filtered column metadata objects
+    // Step 1: Resolve filtered columns metadata objects
     const filteredColumns = resolveFilteredColumns({
         inRequestedKeys: requestedKeys,
         inColumnsConfig: columnsConfig
     });
 
+    // Step 2: Prepare new row objects containing only requested columns
+    const tableData = prepareTableData({
+        inData: rawData,
+        inColumns: filteredColumns
+    });
+
+    // Step 3: Resolve footer configuration & presence flags
+    const footerInfo = resolveFooterConfig({
+        inRendererConfig: localRendererConfig
+    });
+
     return {
         inDomTreeSpecs: localDomTreeSpecs,
         inColumns: filteredColumns,
-        inData: data,
-        inHasFooterConfig: hasFooterConfig,
-        inFooterConfig: footerConfig
+        inData: tableData,
+        inHasFooterConfig: footerInfo.hasFooterConfig,
+        inFooterConfig: footerInfo.footerConfig
     };
 };
 

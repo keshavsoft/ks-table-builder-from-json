@@ -25,6 +25,7 @@ export const createTableTask = ({
             inStore: localStore,
             inRendererConfig: localRendererConfig
         });
+        // console.log("tableSpecInput : ", tableSpecInput);
 
         return buildConfiguredTableSpec(tableSpecInput);
     };
