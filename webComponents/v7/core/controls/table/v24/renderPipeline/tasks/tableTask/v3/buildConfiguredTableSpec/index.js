@@ -34,6 +34,26 @@ export const getBodyRows = ({ inDomTreeSpecs, inData }) => {
     return bodyRows;
 };
 
+export const getBodyAndFooterRows = ({ inDomTreeSpecs,
+    inColumns,
+    inData,
+    inHasFooterConfig,
+    inFooterConfig
+}) => {
+
+    const bodyRows = getBodyRows({ inDomTreeSpecs, inData });
+    // debugger
+    const footerRows = getFooterRows({
+        inDomTreeSpecs,
+        inColumns,
+        inData,
+        inHasFooterConfig,
+        inFooterConfig
+    });
+
+    return { bodyRows, footerRows };
+};
+
 /**
  * Builds the complete <tfoot> spec node populated with footer row/cell specs.
  */

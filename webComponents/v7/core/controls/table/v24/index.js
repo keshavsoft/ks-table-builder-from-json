@@ -29,13 +29,13 @@ const hookSearch = ({ inStory, inDomTreeSpecs, inOptions }) => {
     const localOptions = inOptions || {};
     const tableSearchInput = document.getElementById("tableSearchInput");
 
-
     if (!tableSearchInput) return;
 
     tableSearchInput.addEventListener("input", (e) => {
         const currentTarget = e.currentTarget;
         const main = currentTarget.closest("#tableContainer");
         const tb = main.querySelector("table tbody");
+        const tfoot = main.querySelector("table tfoot");
 
         const rawData = localStory.store.dataStore.getOriginalData();
         const currentTargetValue = e.currentTarget.value;
@@ -88,22 +88,45 @@ const hookSearch = ({ inStory, inDomTreeSpecs, inOptions }) => {
             children: bodyRowsSpec
         };
 
+        // const newBodyRowsSpecs = inStory.refreshTable.getBodyRows({
+        //     inDomTreeSpecs,
+        //     inData: preparedData
+        // });
 
-        const newBodyRowsSpecs = inStory.refreshTable.getBodyRows({
+        // const columnsConfig = inStory.renderersStore.table.store.columnsStore.getColumnsConfig();
+
+        // const newFooterRowsSpecs = inStory.refreshTable.getFooterRows({
+        //     inDomTreeSpecs,
+        //     inColumns,
+        //     inData: preparedData
+        // });
+        const footerConfig = inOptions.renderers.table.footer;
+        // console.log("jjjjjjjjj : ", footerConfig);
+
+        const newBodyAndFooterRowsSpecs = inStory.refreshTable.getBodyAndFooterRows({
             inDomTreeSpecs,
-            inData: preparedData
+            inColumns: columnsConfig,
+            inData: preparedData, inHasFooterConfig: true, inFooterConfig: footerConfig
         });
-
-        console.log("newBodyRowsSpecs : ", tb);
-
+        console.log("newBodyAndFooterRowsSpecs------- : ", newBodyAndFooterRowsSpecs);
 
         tb.innerHTML = "";
-        // Step 7: Convert spec to DOM Node & repaint!
-        const newTbodyNode = domCreationFuncs.versions[domCreationFuncs.maxVersion](newBodyRowsSpecs);
-        // tableBody.replaceWith(newTbodyNode);
+        tfoot.innerHTML = "";
 
-        tb.appendChild(newTbodyNode);
-        console.log("kkk ", k1);
+        // Step 7: Convert spec to DOM Nodes & repaint!
+        const newTbodyNodes = domCreationFuncs.versions[domCreationFuncs.maxVersion](newBodyAndFooterRowsSpecs?.bodyRows);
+        if (Array.isArray(newTbodyNodes)) {
+            tb.append(...newTbodyNodes);
+        } else if (newTbodyNodes) {
+            tb.appendChild(newTbodyNodes);
+        };
+
+        const newFooterNodes = domCreationFuncs.versions[domCreationFuncs.maxVersion](newBodyAndFooterRowsSpecs?.footerRows);
+        if (Array.isArray(newFooterNodes)) {
+            tfoot.append(...newFooterNodes);
+        } else if (newFooterNodes) {
+            tfoot.appendChild(newFooterNodes);
+        };
     });
 };
 
