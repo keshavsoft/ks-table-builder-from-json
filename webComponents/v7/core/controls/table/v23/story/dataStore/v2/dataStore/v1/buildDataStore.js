@@ -9,6 +9,7 @@ export const buildDataStore = ({ inData }) => {
     let stateData = localData;
     let filteredData = null;
     let sortedData = null;
+    console.log("localData", localData);
 
     return {
         getOriginalData: () => originalData,
