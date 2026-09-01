@@ -5,7 +5,7 @@ import domCreationFuncs from "../../../../domCreation/index.js";
 import domTreeJsonFiles from "./domTreeJsonFiles/index.js";
 import applyThemeToSpec from "./applyThemeToSpec.js";
 
-console.log("20");
+console.log("22");
 
 export const renderTable = (inOptions = {}) => {
     const localOptions = inOptions;

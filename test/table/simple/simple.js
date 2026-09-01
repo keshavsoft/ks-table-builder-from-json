@@ -43,12 +43,12 @@ if (tableContainer) {
             table: {
                 columns: ["StockItemName", "StockParentName", "Credit", "Debit"],
                 footer: {
-                    summaryRow1: {
+                    summaryRow: {
                         StockItemName: "count",
                         Credit: "sum",
                         Debit: "sum"
                     },
-                    balanceRow1: {
+                    balanceRow: {
                         StockItemName: "111",
                         Credit: "Credit-Debit",
                         Debit: "Debit-Credit"
