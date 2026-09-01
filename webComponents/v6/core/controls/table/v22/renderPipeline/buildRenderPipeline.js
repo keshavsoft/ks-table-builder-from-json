@@ -9,11 +9,13 @@ export const buildRenderPipeline = ({
     inShowTable = true,
     inCustomTasks = [],
     domTreeJsonFiles,
-    inRenderers, inData
+    inStore,
+    inRenderers
 } = {}) => {
     const localShowSearch = inShowSearch !== false;
     const localShowTable = inShowTable !== false;
     const localCustomTasks = inCustomTasks;
+    const localStore = inStore;
     const localRenderers = inRenderers;
 
     const pipeline = [];
@@ -24,10 +26,11 @@ export const buildRenderPipeline = ({
         domTreeJsonFiles
     }));
 
-    // Render Task 2: Table Component Task (Creates & appends <table> element shell)
+    // Render Task 2: Table Component Task (Creates & appends <table> element shell, receives inStore)
     pipeline.push(createTableTask({
         inShowTable: localShowTable,
-        domTreeJsonFiles, inData,
+        domTreeJsonFiles,
+        inStore: localStore,
         inRendererConfig: localRenderers?.table
     }));
 
@@ -40,4 +43,3 @@ export const buildRenderPipeline = ({
 };
 
 export default buildRenderPipeline;
-

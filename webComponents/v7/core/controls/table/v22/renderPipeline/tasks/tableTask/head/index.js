@@ -10,7 +10,8 @@ export const buildHead = ({ inColumns, inTrSpec, inThSpec }) => {
 
     if (!Array.isArray(localColumns) || localColumns.length === 0 || !localTrSpec || !localThSpec) {
         return [];
-    }
+    };
+    console.log("localColumns : ", localColumns);
 
     const headerRow = buildHeaderRowSpec({
         inColumns: localColumns,

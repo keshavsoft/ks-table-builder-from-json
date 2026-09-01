@@ -17,20 +17,22 @@ export const buildStory = ({
     const localColumnsConfig = columnsConfig || [];
     const localData = data || [];
 
+    // Step 1: Build Store FIRST
+    const store = buildDataStore({
+        inData: localData,
+        inColumnsConfig: localColumnsConfig
+    });
+
+    // Step 2: Pass store into buildRenderPipeline
     const renderPipeline = Array.isArray(rawRenderPipeline) && rawRenderPipeline.length > 0
         ? rawRenderPipeline
         : buildRenderPipeline({
             domTreeJsonFiles,
             inShowSearch: inVisibility?.showSearch,
             inShowTable: inVisibility?.showTable,
-            inRenderers: renderers,
-            inData: localData
+            inStore: store,
+            inRenderers: renderers
         });
-
-    const store = buildDataStore({
-        inData: localData,
-        inColumnsConfig: localColumnsConfig
-    });
 
     return {
         renderPipeline,

@@ -6,13 +6,15 @@ import buildConfiguredTableSpec from "./buildConfiguredTableSpec.js";
 export const createTableTask = ({
     inShowTable = true,
     domTreeJsonFiles,
-    inRendererConfig,
-    inData
+    inStore,
+    inRendererConfig
 } = {}) => {
     const localShowTable = inShowTable !== false;
     const localDomTreeSpecs = domTreeJsonFiles;
+    const localStore = inStore;
     const localRendererConfig = inRendererConfig;
-    const localData = inData;
+
+    console.log("tableTask localStore:", localStore);
 
     return () => {
         if (!localShowTable) {
@@ -23,10 +25,12 @@ export const createTableTask = ({
         const hasFooterConfig = Boolean(localRendererConfig && ("footer" in localRendererConfig));
         const footerConfig = localRendererConfig?.footer;
 
+        const data = localStore?.dataStore?.getOriginalData() || [];
+
         return buildConfiguredTableSpec({
             inDomTreeSpecs: localDomTreeSpecs,
             inColumns: columns,
-            inData: localData,
+            inData: data,
             inHasFooterConfig: hasFooterConfig,
             inFooterConfig: footerConfig
         });
