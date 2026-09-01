@@ -31,6 +31,7 @@ if (tableContainer) {
 
     // Table Render (v9 Single-Call orchestrator pattern with responsibility-grouped options)
     const tableElement = renderTable({
+        toRenderHtmlId: "tableContainer",
         theme1: "dark",
         inTable: { inRows: stockRows },
         inEvents: { inOnRowClick: handleRowClick },
@@ -69,16 +70,16 @@ if (tableContainer) {
         }
     });
 
-    if (tableElement) {
-        tableContainer.appendChild(tableElement);
+    // if (tableElement) {
+    //     tableContainer.appendChild(tableElement);
 
-        // Reconstruct JSON Spec from rendered DOM Element
-        const jsonSpec = buildSpecFromElement({ inElement: tableElement });
-        console.log("Reverted JSON Spec from DOM:", jsonSpec);
+    //     // Reconstruct JSON Spec from rendered DOM Element
+    //     const jsonSpec = buildSpecFromElement({ inElement: tableElement });
+    //     console.log("Reverted JSON Spec from DOM:", jsonSpec);
 
-        const report = compareSpecs({ inFromSpec: tableElement, inToSpec: jsonSpec });
-        console.log("Spec Comparison Report:", report);
-    };
+    //     const report = compareSpecs({ inFromSpec: tableElement, inToSpec: jsonSpec });
+    //     console.log("Spec Comparison Report:", report);
+    // };
 
     // tableContainer.appendChild(directJs());
 

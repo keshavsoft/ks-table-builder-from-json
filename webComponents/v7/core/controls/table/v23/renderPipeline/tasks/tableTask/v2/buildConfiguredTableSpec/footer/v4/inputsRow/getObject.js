@@ -12,7 +12,7 @@ export const getObject = ({ inInputsConfig, inColumns }) => {
 
     // Helper: Build single input data object from a config item
     const buildSingleInputObject = (configItem) => {
-        console.log("localInputsConfig : ", localInputsConfig, localColumns);
+        // console.log("localInputsConfig : ", localInputsConfig, localColumns);
         const inputObject = {};
 
         localColumns.forEach(columnKey => {
