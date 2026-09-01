@@ -27,15 +27,14 @@ export const resolveTableOptions = ({
             inData: localData
         });
 
-    // Dedicated dataStore module hook
-    const dataStore = buildDataStore({
+    const store = buildDataStore({
         inData: localData,
         inColumnsConfig: localColumnsConfig
     });
 
     return {
         renderPipeline,
-        dataStore
+        store
     };
 };
 

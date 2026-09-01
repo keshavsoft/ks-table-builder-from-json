@@ -1,4 +1,4 @@
-import buildDataStore from "./v1/index.js";
+import buildDataStore from "./v2/index.js";
 
 export { buildDataStore };
 export default buildDataStore;
