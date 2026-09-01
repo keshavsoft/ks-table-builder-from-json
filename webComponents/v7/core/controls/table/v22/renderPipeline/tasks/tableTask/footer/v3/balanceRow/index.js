@@ -1,4 +1,5 @@
 import getObject from "./getObject.js";
+import buildRowSpec from "./buildRowSpec.js";
 
 /**
  * Self-contained Balance Row Module for footer/v3
@@ -19,5 +20,5 @@ export const getBalanceRow = ({ inBalanceConfig, inColumns, inSummaryRowObject }
     });
 };
 
-export { getObject };
+export { getObject, buildRowSpec };
 export default getBalanceRow;

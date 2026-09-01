@@ -1,4 +1,5 @@
 import getObject from "./getObject.js";
+import buildRowSpec from "./buildRowSpec.js";
 
 /**
  * Self-contained Summary Row Module for footer/v3
@@ -19,5 +20,5 @@ export const getSummaryRow = ({ inSummaryConfig, inColumns, inData }) => {
     });
 };
 
-export { getObject };
+export { getObject, buildRowSpec };
 export default getSummaryRow;

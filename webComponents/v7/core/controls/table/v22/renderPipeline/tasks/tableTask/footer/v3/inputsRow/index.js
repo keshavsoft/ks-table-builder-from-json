@@ -1,4 +1,5 @@
 import getObject from "./getObject.js";
+import buildRowSpec from "./buildRowSpec.js";
 
 /**
  * Self-contained Inputs Row Module for footer/v3
@@ -17,5 +18,5 @@ export const getInputsRow = ({ inInputsConfig, inColumns }) => {
     });
 };
 
-export { getObject };
+export { getObject, buildRowSpec };
 export default getInputsRow;

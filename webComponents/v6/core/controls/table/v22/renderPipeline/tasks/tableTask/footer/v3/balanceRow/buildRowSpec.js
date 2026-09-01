@@ -1,12 +1,8 @@
-/**
- * Shared Footer Helper (v3): Converts any calculated data object into a <tr> row spec
- */
-export const buildFooterRowSpec = ({ inDataObject, inColumns, inTrSpec, inThSpec, inInputSpec }) => {
+export const buildRowSpec = ({ inDataObject, inColumns, inTrSpec, inThSpec }) => {
     const localDataObject = inDataObject || {};
     const localColumns = inColumns || [];
     const localTrSpec = inTrSpec;
     const localThSpec = inThSpec;
-    const localInputSpec = inInputSpec;
 
     if (!localTrSpec || !localThSpec) {
         return null;
@@ -24,15 +20,11 @@ export const buildFooterRowSpec = ({ inDataObject, inColumns, inTrSpec, inThSpec
             : "";
 
         const thNode = JSON.parse(JSON.stringify(localThSpec));
-        const inputNode = JSON.parse(JSON.stringify(localInputSpec));
-        thNode.textContent = "";
-
-        // inputNode.value = cellValue;
-        thNode.children = [inputNode];
+        thNode.textContent = String(cellValue);
         return thNode;
     });
 
     return trNode;
 };
 
-export default buildFooterRowSpec;
+export default buildRowSpec;

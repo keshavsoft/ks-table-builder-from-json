@@ -244,9 +244,7 @@ describe("ks-table-builder-from-json Unit Test Suite", () => {
 
             test("should calculate summary row data object in Phase 1 and build row spec in Phase 2", async () => {
                 const { buildFooter } = await import("../webComponents/v6/core/controls/table/v22/renderPipeline/tasks/tableTask/footer/v3/index.js");
-
-                const { getObject } = await import("../webComponents/v6/core/controls/table/v22/renderPipeline/tasks/tableTask/footer/v3/summaryRow/index.js");
-                const { buildFooterRowSpec } = await import("../webComponents/v6/core/controls/table/v22/renderPipeline/tasks/tableTask/footer/v3/buildFooterRowSpec.js");
+                const { getObject, buildRowSpec: buildSummaryRowSpec } = await import("../webComponents/v6/core/controls/table/v22/renderPipeline/tasks/tableTask/footer/v3/summaryRow/index.js");
 
                 const columns = ["StockItemName", "StockParentName", "Rate"];
                 const data = [
@@ -272,11 +270,11 @@ describe("ks-table-builder-from-json Unit Test Suite", () => {
                     Rate: "200"
                 });
 
-                // Phase 2 test: buildFooterRowSpec builds spec from data object
+                // Phase 2 test: buildSummaryRowSpec builds spec from data object
                 const trSpec = { tagName: "tr", children: [] };
                 const thSpec = { tagName: "th", textContent: "" };
 
-                const rowSpec = buildFooterRowSpec({
+                const rowSpec = buildSummaryRowSpec({
                     inDataObject: summaryObj,
                     inColumns: columns,
                     inTrSpec: trSpec,
@@ -286,7 +284,6 @@ describe("ks-table-builder-from-json Unit Test Suite", () => {
                 assert.equal(rowSpec.children.length, 3);
                 assert.equal(rowSpec.children[0].textContent, "2");
                 assert.equal(rowSpec.children[2].textContent, "200");
-
 
                 // Orchestrator test: buildFooter
                 const footerRows = buildFooter({
@@ -308,7 +305,6 @@ describe("ks-table-builder-from-json Unit Test Suite", () => {
 
             test("should evaluate balance row formulas like Credit-Debit using summaryRowObject", async () => {
                 const { buildFooter } = await import("../webComponents/v6/core/controls/table/v22/renderPipeline/tasks/tableTask/footer/v3/index.js");
-
 
                 const columns = ["StockItemName", "Credit", "Debit"];
                 const data = [
@@ -358,6 +354,7 @@ describe("ks-table-builder-from-json Unit Test Suite", () => {
 
                 const trSpec = { tagName: "tr", children: [] };
                 const thSpec = { tagName: "th", textContent: "" };
+                const inputSpec = { tagName: "input", attributes: { type: "text" } };
 
                 const footerRows = buildFooter({
                     inHasFooterConfig: true,
@@ -370,7 +367,8 @@ describe("ks-table-builder-from-json Unit Test Suite", () => {
                     inColumns: columns,
                     inData: data,
                     inTrSpec: trSpec,
-                    inThSpec: thSpec
+                    inThSpec: thSpec,
+                    inInputSpec: inputSpec
                 });
 
                 assert.equal(footerRows.length, 2);

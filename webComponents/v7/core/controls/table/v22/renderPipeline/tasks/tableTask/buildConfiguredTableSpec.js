@@ -1,6 +1,6 @@
 import buildHead from "./head/index.js";
 import buildBody from "./body/index.js";
-import buildFooter from "./footer/v3/index.js";
+import buildFooter from "./footer/v4/index.js";
 
 
 /**
