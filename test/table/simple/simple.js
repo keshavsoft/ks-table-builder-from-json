@@ -48,7 +48,7 @@ if (tableContainer) {
         ],
         renderers: {
             table: {
-                columns: ["StockItemName", "StockParentName", "Credit", "Debit"],
+                columns: ["StockItemName", "Credit", "Debit"],
                 footer: {
                     summaryRow: {
                         StockItemName: "count",
