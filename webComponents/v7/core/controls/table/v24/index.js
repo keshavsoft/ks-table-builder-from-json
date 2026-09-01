@@ -2,9 +2,9 @@ import { runRenderPipeline } from "./renderPipeline/index.js";
 import buildStory from "./story/index.js";
 import domCreationFuncs from "../../../../domCreation/index.js";
 import getActiveDomTreeSpecs from "./getActiveDomTreeSpecs.js";
-import buildBody from "./renderPipeline/tasks/tableTask/v2/buildConfiguredTableSpec/body/index.js";
-import prepareTableData from "./renderPipeline/tasks/tableTask/v2/buildConfiguredTableSpecInput/prepareTableData.js";
-import resolveFilteredColumns from "./renderPipeline/tasks/tableTask/v2/buildConfiguredTableSpecInput/resolveFilteredColumns.js";
+import buildBody from "./renderPipeline/tasks/tableTask/v3/buildConfiguredTableSpec/body/index.js";
+import prepareTableData from "./renderPipeline/tasks/tableTask/v3/buildConfiguredTableSpecInput/prepareTableData.js";
+import resolveFilteredColumns from "./renderPipeline/tasks/tableTask/v3/buildConfiguredTableSpecInput/resolveFilteredColumns.js";
 
 console.log("24");
 
@@ -29,9 +29,15 @@ const hookSearch = ({ inStory, inDomTreeSpecs, inOptions }) => {
     const localOptions = inOptions || {};
     const tableSearchInput = document.getElementById("tableSearchInput");
 
+
     if (!tableSearchInput) return;
 
     tableSearchInput.addEventListener("input", (e) => {
+        const currentTarget = e.currentTarget;
+        const main = currentTarget.closest("#tableContainer");
+        const tb = main.querySelector("table tbody");
+        console.log("main ", tb);
+
         const rawData = localStory.store.dataStore.getOriginalData();
         const currentTargetValue = e.currentTarget.value;
 
@@ -83,9 +89,19 @@ const hookSearch = ({ inStory, inDomTreeSpecs, inOptions }) => {
             children: bodyRowsSpec
         };
 
+
+        const newBody = inStory.refreshTable.getBody({
+            inDomTreeSpecs,
+            inData: preparedData
+        });
+
+        tb.innerHTML = "";
         // Step 7: Convert spec to DOM Node & repaint!
-        const newTbodyNode = domCreationFuncs.versions[domCreationFuncs.maxVersion](newTbodySpec);
-        tableBody.replaceWith(newTbodyNode);
+        const newTbodyNode = domCreationFuncs.versions[domCreationFuncs.maxVersion](newBody);
+        // tableBody.replaceWith(newTbodyNode);
+
+        tb.appendChild(newTbodyNode);
+        console.log("kkk ", k1);
     });
 };
 

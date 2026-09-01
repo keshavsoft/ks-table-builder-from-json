@@ -1,6 +1,7 @@
 import buildGlobalStore from "./buildGlobalStore.js";
 import buildRenderersStore from "./buildRenderersStore.js";
 import buildPipeline from "./buildPipeline.js";
+import { getBody, getFooter } from "../renderPipeline/tasks/tableTask/v3/buildConfiguredTableSpec/index.js";
 
 /**
  * Story Orchestrator: Combines globalStore, renderersStore, and renderPipeline
@@ -48,7 +49,11 @@ export const buildStory = ({
     return {
         renderPipeline,
         store: globalStore,
-        renderersStore
+        renderersStore,
+        refreshTable: {
+            getBody,
+            getFooter
+        }
     };
 };
 

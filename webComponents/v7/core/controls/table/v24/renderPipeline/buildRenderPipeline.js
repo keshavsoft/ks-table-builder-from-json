@@ -29,7 +29,7 @@ export const buildRenderPipeline = ({
     // Render Task 2: Table Component Task (Creates & appends <table> element shell, receives inStore)
     pipeline.push(createTableTask({
         inShowTable: localShowTable,
-        domTreeJsonFiles,
+        inDomTreeSpecs: domTreeJsonFiles,
         inStore: localStore,
         inRendererConfig: localRenderers?.table
     }));
