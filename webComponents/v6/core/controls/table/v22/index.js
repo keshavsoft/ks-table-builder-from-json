@@ -2,28 +2,18 @@ import { runRenderPipeline } from "./renderPipeline/index.js";
 
 import resolveTableOptions from "./options/resolveTableOptions.js";
 import domCreationFuncs from "../../../../domCreation/index.js";
-import domTreeJsonFiles from "./domTreeJsonFiles/index.js";
-import applyThemeToSpec from "./applyThemeToSpec.js";
+import getActiveDomTreeSpecs from "./getActiveDomTreeSpecs.js";
 
-console.log("20");
+console.log("22");
 
 export const renderTable = (inOptions = {}) => {
     const localOptions = inOptions;
 
     // Resolve theme name from options
-    let themeName = localOptions.theme ? localOptions.theme : "light";
-    // Get theme specs for resolved theme
+    const themeName = localOptions.theme ? localOptions.theme : "light";
 
     // Map theme classes from getThemeSpecs onto domTreeJsonFiles base specs
-    const activeDomTreeSpecs = {
-        root: applyThemeToSpec({ inSpec: domTreeJsonFiles.root, inThemeName: themeName, inThemeSpecKey: "root" }),
-        searchSpec: applyThemeToSpec({ inSpec: domTreeJsonFiles.searchSpec, inThemeName: themeName, inThemeSpecKey: "search" }),
-        tableSpec: applyThemeToSpec({ inSpec: domTreeJsonFiles.tableSpec, inThemeName: themeName, inThemeSpecKey: "table" }),
-        trSpec: applyThemeToSpec({ inSpec: domTreeJsonFiles.trSpec, inThemeName: themeName, inThemeSpecKey: "tr" }),
-        thSpec: applyThemeToSpec({ inSpec: domTreeJsonFiles.thSpec, inThemeName: themeName, inThemeSpecKey: "th" }),
-        tdSpec: applyThemeToSpec({ inSpec: domTreeJsonFiles.tdSpec, inThemeName: themeName, inThemeSpecKey: "td" }),
-        inputSpec: applyThemeToSpec({ inSpec: domTreeJsonFiles.inputSpec, inThemeName: themeName, inThemeSpecKey: "input" })
-    };
+    const activeDomTreeSpecs = getActiveDomTreeSpecs({ inThemeName: themeName });
 
     // Step 1: Resolve & normalize configuration options
     const options = resolveTableOptions({
@@ -45,4 +35,5 @@ export const renderTable = (inOptions = {}) => {
     return domElement;
 };
 
+export { getActiveDomTreeSpecs };
 export default renderTable;

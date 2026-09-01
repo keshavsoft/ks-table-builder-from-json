@@ -10,12 +10,13 @@ export const getObject = ({ inSummaryConfig, inColumns, inData }) => {
     const localData = inData || [];
 
     const summaryDataObject = {};
-    // console.log("localColumns : ", localColumns);
+    // console.log("localSummaryConfig : ", localSummaryConfig);
 
     localColumns.forEach(columnKey => {
         const keyName = typeof columnKey === "object"
             ? (columnKey.field || columnKey.name || columnKey.label)
             : columnKey;
+        // console.log("keyName : ", keyName, columnKey);
 
         const funcType = localSummaryConfig[keyName];
 
