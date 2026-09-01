@@ -1,4 +1,4 @@
-import { getHead, getBody, getFooter } from "./buildConfiguredTableSpec/index.js";
+import { getHeadRows, getBodyRows, getFooterRows } from "./buildConfiguredTableSpec/index.js";
 import buildConfiguredTableSpecInput from "./buildConfiguredTableSpecInput/index.js";
 
 /**
@@ -27,16 +27,26 @@ export const createTableTask = ({
         });
 
         // Step 1: Build <thead> section element
-        const headNode = getHead(tableSpecInput);
+        const headRows = getHeadRows(tableSpecInput);
 
         // Step 2: Build <tbody> section element
-        const bodyNode = getBody(tableSpecInput);
+        const bodyRows = getBodyRows(tableSpecInput);
 
         // Step 3: Build <tfoot> section element
-        const footerNode = getFooter(tableSpecInput);
+        const footerRows = getFooterRows(tableSpecInput);
         const tableSpec = JSON.parse(JSON.stringify(localDomTreeSpecs.tableSpec));
 
-        tableSpec.children = [headNode, bodyNode, footerNode].filter(Boolean);
+        const headRow = tableSpec.children?.find(child => child.tagName === "thead") || { tagName: "thead", children: [] }
+
+        headRow.children = headRows;
+
+        const bodyRow = tableSpec.children?.find(child => child.tagName === "tbody") || { tagName: "tbody", children: [] }
+
+        bodyRow.children = bodyRows;
+
+        const footerRow = tableSpec.children?.find(child => child.tagName === "tfoot") || { tagName: "tfoot", children: [] }
+
+        footerRow.children = footerRows;
 
         return tableSpec;
     };

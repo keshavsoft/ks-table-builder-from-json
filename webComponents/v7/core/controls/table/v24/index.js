@@ -36,7 +36,6 @@ const hookSearch = ({ inStory, inDomTreeSpecs, inOptions }) => {
         const currentTarget = e.currentTarget;
         const main = currentTarget.closest("#tableContainer");
         const tb = main.querySelector("table tbody");
-        console.log("main ", tb);
 
         const rawData = localStory.store.dataStore.getOriginalData();
         const currentTargetValue = e.currentTarget.value;
@@ -90,14 +89,17 @@ const hookSearch = ({ inStory, inDomTreeSpecs, inOptions }) => {
         };
 
 
-        const newBody = inStory.refreshTable.getBody({
+        const newBodyRowsSpecs = inStory.refreshTable.getBodyRows({
             inDomTreeSpecs,
             inData: preparedData
         });
 
+        console.log("newBodyRowsSpecs : ", tb);
+
+
         tb.innerHTML = "";
         // Step 7: Convert spec to DOM Node & repaint!
-        const newTbodyNode = domCreationFuncs.versions[domCreationFuncs.maxVersion](newBody);
+        const newTbodyNode = domCreationFuncs.versions[domCreationFuncs.maxVersion](newBodyRowsSpecs);
         // tableBody.replaceWith(newTbodyNode);
 
         tb.appendChild(newTbodyNode);

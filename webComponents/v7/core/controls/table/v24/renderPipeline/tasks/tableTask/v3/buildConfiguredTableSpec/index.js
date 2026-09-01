@@ -5,7 +5,7 @@ import buildFooter from "./footer/v4/index.js";
 /**
  * Builds the complete <thead> spec node populated with head row/cell specs.
  */
-export const getHead = ({ inDomTreeSpecs, inColumns }) => {
+export const getHeadRows = ({ inDomTreeSpecs, inColumns }) => {
     const localDomTreeSpecs = inDomTreeSpecs;
     const localColumns = inColumns || [];
 
@@ -15,21 +15,13 @@ export const getHead = ({ inDomTreeSpecs, inColumns }) => {
         inThSpec: localDomTreeSpecs.thSpec
     });
 
-    const theadNode = JSON.parse(JSON.stringify(
-        localDomTreeSpecs.tableSpec.children?.find(child => child.tagName === "thead") || { tagName: "thead", children: [] }
-    ));
-
-    if (Array.isArray(headRows) && headRows.length > 0) {
-        theadNode.children = headRows;
-    }
-
-    return theadNode;
+    return headRows;
 };
 
 /**
  * Builds the complete <tbody> spec node populated with body row/cell specs.
  */
-export const getBody = ({ inDomTreeSpecs, inData }) => {
+export const getBodyRows = ({ inDomTreeSpecs, inData }) => {
     const localDomTreeSpecs = inDomTreeSpecs;
     const localData = inData || [];
 
@@ -39,21 +31,13 @@ export const getBody = ({ inDomTreeSpecs, inData }) => {
         inTdSpec: localDomTreeSpecs.tdSpec
     });
 
-    const tbodyNode = JSON.parse(JSON.stringify(
-        localDomTreeSpecs.tableSpec.children?.find(child => child.tagName === "tbody") || { tagName: "tbody", children: [] }
-    ));
-
-    if (Array.isArray(bodyRows) && bodyRows.length > 0) {
-        tbodyNode.children = bodyRows;
-    }
-
-    return tbodyNode;
+    return bodyRows;
 };
 
 /**
  * Builds the complete <tfoot> spec node populated with footer row/cell specs.
  */
-export const getFooter = ({
+export const getFooterRows = ({
     inDomTreeSpecs,
     inColumns,
     inData,
@@ -80,17 +64,7 @@ export const getFooter = ({
         inInputSpec: localDomTreeSpecs.inputSpec
     });
 
-    if (!Array.isArray(footerRows) || footerRows.length === 0) {
-        return null;
-    }
-
-    const tfootNode = JSON.parse(JSON.stringify(
-        localDomTreeSpecs.tableSpec.children?.find(child => child.tagName === "tfoot") || { tagName: "tfoot", children: [] }
-    ));
-
-    tfootNode.children = footerRows;
-
-    return tfootNode;
+    return footerRows;
 };
 
 /**
