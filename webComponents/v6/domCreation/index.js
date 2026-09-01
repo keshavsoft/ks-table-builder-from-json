@@ -10,7 +10,7 @@ const versions = {
     v5
 };
 
-const defaultVersion = "v4";
+const defaultVersion = "v3";
 
 const maxVersion = Math.max(
     ...Object.keys(versions).map(key => Number(key.slice(1)))
