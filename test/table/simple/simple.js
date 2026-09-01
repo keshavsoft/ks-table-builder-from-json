@@ -1,6 +1,7 @@
-import { renderTable } from "../../../../webComponents/v6/core/controls/table/v22/index.js";
-import directJs from "../../../../webComponents/v6/core/controls/table/v22/direct.js";
-import buildSpecFromElement from "../../../../webComponents/v6/domToJson/v1/buildSpecFromElement.js";
+import { renderTable } from "../../../../webComponents/v7/core/controls/table/v22/index.js";
+import directJs from "../../../../webComponents/v7/core/controls/table/v22/direct.js";
+import buildSpecFromElement from "../../../../webComponents/v7/domToJson/v1/buildSpecFromElement.js";
+import { compareSpecs } from "../../../../webComponents/v7/specCompare/v1/compareSpecs.js";
 
 const tableContainer = document.getElementById("tableContainer");
 const selectionBadge = document.getElementById("selectionBadge");
@@ -67,6 +68,9 @@ if (tableContainer) {
         // Reconstruct JSON Spec from rendered DOM Element
         const jsonSpec = buildSpecFromElement({ inElement: tableElement });
         console.log("Reverted JSON Spec from DOM:", jsonSpec);
+
+        const report = compareSpecs({ inFromSpec: tableElement, inToSpec: jsonSpec });
+        console.log("Spec Comparison Report:", report);
     };
 
     // tableContainer.appendChild(directJs());

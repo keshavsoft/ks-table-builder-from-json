@@ -400,6 +400,61 @@ describe("ks-table-builder-from-json Unit Test Suite", () => {
             assert.equal(spec.textContent, "Welcome Home");
         });
     });
+
+    describe("11. compareSpecs (JSON Spec Comparator)", () => {
+        test("should return isEqual: true when source (from) and reconstructed (to) specs are identical", async () => {
+            const { compareSpecs } = await import("../webComponents/v6/specCompare/v1/compareSpecs.js");
+
+            const fromSpec = { tagName: "div", attributes: { class: "card" }, textContent: "Hello" };
+            const toSpec = { tagName: "div", attributes: { class: "card" }, textContent: "Hello" };
+
+            const report = compareSpecs({ inFromSpec: fromSpec, inToSpec: toSpec });
+            assert.equal(report.isEqual, true);
+            assert.equal(report.missingInTo.length, 0);
+            assert.equal(report.extraInTo.length, 0);
+            assert.equal(report.mismatches.length, 0);
+        });
+
+        test("should identify items present in 'from' but missing in 'to' (missingInTo report)", async () => {
+            const { compareSpecs } = await import("../webComponents/v6/specCompare/v1/compareSpecs.js");
+
+            const fromSpec = { tagName: "div", attributes: { class: "card", id: "myCard" } };
+            const toSpec = { tagName: "div", attributes: { class: "card" } };
+
+            const report = compareSpecs({ inFromSpec: fromSpec, inToSpec: toSpec });
+            assert.equal(report.isEqual, false);
+            assert.equal(report.missingInTo.length, 1);
+            assert.equal(report.missingInTo[0].path, "attributes.id");
+            assert.equal(report.missingInTo[0].value, "myCard");
+        });
+
+        test("should identify items present in 'to' but missing in 'from' (extraInTo report)", async () => {
+            const { compareSpecs } = await import("../webComponents/v6/specCompare/v1/compareSpecs.js");
+
+            const fromSpec = { tagName: "div", attributes: { class: "card" } };
+            const toSpec = { tagName: "div", attributes: { class: "card", "data-rendered": "true" } };
+
+            const report = compareSpecs({ inFromSpec: fromSpec, inToSpec: toSpec });
+            assert.equal(report.isEqual, false);
+            assert.equal(report.extraInTo.length, 1);
+            assert.equal(report.extraInTo[0].path, "attributes.data-rendered");
+            assert.equal(report.extraInTo[0].value, "true");
+        });
+
+        test("should identify attribute value mismatches between 'from' and 'to'", async () => {
+            const { compareSpecs } = await import("../webComponents/v6/specCompare/v1/compareSpecs.js");
+
+            const fromSpec = { tagName: "div", attributes: { class: "p-4 bg-white" } };
+            const toSpec = { tagName: "div", attributes: { class: "p-4 bg-black" } };
+
+            const report = compareSpecs({ inFromSpec: fromSpec, inToSpec: toSpec });
+            assert.equal(report.isEqual, false);
+            assert.equal(report.mismatches.length, 1);
+            assert.equal(report.mismatches[0].path, "attributes.class");
+            assert.equal(report.mismatches[0].fromValue, "p-4 bg-white");
+            assert.equal(report.mismatches[0].toValue, "p-4 bg-black");
+        });
+    });
 });
 
 
