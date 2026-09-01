@@ -1,5 +1,5 @@
-import buildConfiguredTableSpec from "./buildConfiguredTableSpec.js";
-import buildConfiguredTableSpecInput from "./buildConfiguredTableSpecInput.js";
+import buildConfiguredTableSpec from "./buildConfiguredTableSpec/index.js";
+import buildConfiguredTableSpecInput from "./buildConfiguredTableSpecInput/index.js";
 
 /**
  * Render Task Transformer: Creates and appends the <table> DOM element skeleton during rendering
