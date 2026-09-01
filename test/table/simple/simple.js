@@ -1,5 +1,5 @@
-import { renderTable } from "../../../../webComponents/v7/core/controls/table/v22/index.js";
-import directJs from "../../../../webComponents/v7/core/controls/table/v22/direct.js";
+import { renderTable } from "../../../../webComponents/v7/core/controls/table/v23/index.js";
+import directJs from "../../../../webComponents/v7/core/controls/table/v23/direct.js";
 import buildSpecFromElement from "../../../../webComponents/v7/domToJson/v1/buildSpecFromElement.js";
 import { compareSpecs } from "../../../../webComponents/v7/specCompare/v1/compareSpecs.js";
 
