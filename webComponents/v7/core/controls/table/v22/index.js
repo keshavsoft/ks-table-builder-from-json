@@ -1,6 +1,5 @@
 import { runRenderPipeline } from "./renderPipeline/index.js";
-
-import resolveTableOptions from "./options/resolveTableOptions.js";
+import buildStory from "./story/index.js";
 import domCreationFuncs from "../../../../domCreation/index.js";
 import getActiveDomTreeSpecs from "./getActiveDomTreeSpecs.js";
 
@@ -15,15 +14,15 @@ export const renderTable = (inOptions = {}) => {
     // Map theme classes from getThemeSpecs onto domTreeJsonFiles base specs
     const activeDomTreeSpecs = getActiveDomTreeSpecs({ inThemeName: themeName });
 
-    // Step 1: Resolve & normalize configuration options
-    const options = resolveTableOptions({
+    // Step 1: Build story (pipeline & store)
+    const story = buildStory({
         domTreeJsonFiles: activeDomTreeSpecs,
         ...localOptions
     });
-    console.log("options---------", options);
+
     // Step 2: Layer 1b - Execute Render Component Pipeline
     const childrenNodes = runRenderPipeline({
-        inPipeline: options.renderPipeline
+        inPipeline: story.renderPipeline
     });
 
     const localRootSpec = activeDomTreeSpecs.root;
@@ -35,5 +34,4 @@ export const renderTable = (inOptions = {}) => {
     return domElement;
 };
 
-export { getActiveDomTreeSpecs };
 export default renderTable;

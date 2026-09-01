@@ -2,9 +2,9 @@ import { buildRenderPipeline } from "../renderPipeline/index.js";
 import buildDataStore from "./dataStore/index.js";
 
 /**
- * Resolves and normalizes grouped table options into structured responsibility buckets
+ * Story Builder: Resolves component render pipeline and store buckets
  */
-export const resolveTableOptions = ({
+export const buildStory = ({
     domTreeJsonFiles,
     inVisibility = {},
     inPipeline = {},
@@ -38,4 +38,4 @@ export const resolveTableOptions = ({
     };
 };
 
-export default resolveTableOptions;
+export default buildStory;
