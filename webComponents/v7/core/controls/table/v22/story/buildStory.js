@@ -1,8 +1,9 @@
-import { buildRenderPipeline } from "../renderPipeline/index.js";
-import buildDataStore from "./dataStore/index.js";
+import buildGlobalStore from "./buildGlobalStore.js";
+import buildRenderersStore from "./buildRenderersStore.js";
+import buildPipeline from "./buildPipeline.js";
 
 /**
- * Story Builder: Resolves component render pipeline and store buckets
+ * Story Orchestrator: Combines globalStore, renderersStore, and renderPipeline
  */
 export const buildStory = ({
     domTreeJsonFiles,
@@ -12,31 +13,38 @@ export const buildStory = ({
     renderers,
     data
 } = {}) => {
-    const localPipelineObj = typeof inPipeline === "object" && inPipeline !== null ? inPipeline : {};
-    const rawRenderPipeline = localPipelineObj.inRenderPipeline || localPipelineObj.renderPipeline || inPipeline;
+    const localDomTreeSpecs = domTreeJsonFiles;
+    const localVisibility = inVisibility;
+    const localPipeline = inPipeline;
     const localColumnsConfig = columnsConfig || [];
     const localData = data || [];
+    const localRenderers = renderers || {};
 
-    // Step 1: Build Store FIRST
-    const store = buildDataStore({
+    // 1. Build Global Store
+    const globalStore = buildGlobalStore({
         inData: localData,
         inColumnsConfig: localColumnsConfig
     });
 
-    // Step 2: Pass store into buildRenderPipeline
-    const renderPipeline = Array.isArray(rawRenderPipeline) && rawRenderPipeline.length > 0
-        ? rawRenderPipeline
-        : buildRenderPipeline({
-            domTreeJsonFiles,
-            inShowSearch: inVisibility?.showSearch,
-            inShowTable: inVisibility?.showTable,
-            inStore: store,
-            inRenderers: renderers
-        });
+    // 2. Build Renderer-Scoped Stores
+    const renderersStore = buildRenderersStore({
+        inGlobalStore: globalStore,
+        inRenderers: localRenderers
+    });
+
+    // 3. Build Component Render Pipeline
+    const renderPipeline = buildPipeline({
+        domTreeJsonFiles: localDomTreeSpecs,
+        inVisibility: localVisibility,
+        inPipeline: localPipeline,
+        inStore: globalStore,
+        inRenderers: localRenderers
+    });
 
     return {
         renderPipeline,
-        store
+        store: globalStore,
+        renderersStore
     };
 };
 
