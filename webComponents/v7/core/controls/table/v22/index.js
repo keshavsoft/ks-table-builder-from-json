@@ -20,7 +20,7 @@ export const renderTable = (inOptions = {}) => {
         domTreeJsonFiles: activeDomTreeSpecs,
         ...localOptions
     });
-
+    console.log("options---------", options);
     // Step 2: Layer 1b - Execute Render Component Pipeline
     const childrenNodes = runRenderPipeline({
         inPipeline: options.renderPipeline
@@ -29,7 +29,7 @@ export const renderTable = (inOptions = {}) => {
     const localRootSpec = activeDomTreeSpecs.root;
 
     localRootSpec.children.push(...childrenNodes);
-    // console.log("localRootSpec---------");
+
     const domElement = domCreationFuncs.versions[domCreationFuncs.maxVersion](localRootSpec);
 
     return domElement;
