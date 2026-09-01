@@ -36,9 +36,16 @@ if (tableContainer) {
         inEvents: { inOnRowClick: handleRowClick },
         data: stockRows,
         inVisibility: {
-            showSearch: true,
+            showSearch: false,
             showTable: true
         },
+        columnsConfig: [
+            { key: "StockItemName", label: "Stock Item Name" },
+            { key: "StockParentName", label: "Stock Parent Name" },
+            { key: "Uom", label: "Unit of Measurement" },
+            { key: "Credit", label: "Credit" },
+            { key: "Debit", label: "Debit" }
+        ],
         renderers: {
             table: {
                 columns: ["StockItemName", "StockParentName", "Credit", "Debit"],
