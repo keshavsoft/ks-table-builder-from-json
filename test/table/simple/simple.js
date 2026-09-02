@@ -1,7 +1,9 @@
-import { renderTable } from "../../../../webComponents/v7/core/controls/table/v24/index.js";
+import { renderTable } from "../../../../webComponents/v7/core/controls/table/v25/index.js";
 import directJs from "../../../../webComponents/v7/core/controls/table/v23/direct.js";
 import buildSpecFromElement from "../../../../webComponents/v7/domToJson/v1/buildSpecFromElement.js";
 import { compareSpecs } from "../../../../webComponents/v7/specCompare/v1/compareSpecs.js";
+
+import stockItemsJson from "./stockItems.json" with { type: "json" };
 
 const tableContainer = document.getElementById("tableContainer");
 const selectionBadge = document.getElementById("selectionBadge");
@@ -30,12 +32,12 @@ if (tableContainer) {
     };
 
     // Table Render (v9 Single-Call orchestrator pattern with responsibility-grouped options)
-    const tableElement = renderTable({
+    renderTable({
         toRenderHtmlId: "tableContainer",
         theme1: "dark",
-        inTable: { inRows: stockRows },
+        inTable: { inRows: stockItemsJson },
         inEvents: { inOnRowClick: handleRowClick },
-        data: stockRows,
+        data: stockItemsJson,
         inVisibility: {
             showSearch: true,
             showTable: true
@@ -49,19 +51,19 @@ if (tableContainer) {
         ],
         renderers: {
             table: {
-                columns: ["StockItemName", "Credit", "Debit"],
+                columns: ["StockItemName", "StockParentName", "Uom"],
                 footer: {
                     summaryRow: {
                         StockItemName: "count",
                         Credit: "sum",
                         Debit: "sum"
                     },
-                    balanceRow: {
+                    balanceRow1: {
                         StockItemName: "111",
                         Credit: "Credit-Debit",
                         Debit: "Debit-Credit"
                     },
-                    inputsRow: [
+                    inputsRow1: [
                         ["StockItemName", "Credit", "Debit"]
                     ]
 
